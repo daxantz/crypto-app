@@ -1,7 +1,7 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
-
+import reactPlugin from "eslint-plugin-react";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -29,11 +29,13 @@ const eslintConfig = [
       "react/react-in-jsx-scope": "off",
       "no-undef": "off",
     },
+    plugins: {
+      react: reactPlugin,
+    },
   },
 
   // Top-level settings
   {
-    plugins: ["react"],
     settings: {
       react: {
         version: "detect", // Automatically detect the React version
