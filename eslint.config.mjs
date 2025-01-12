@@ -13,7 +13,7 @@ const eslintConfig = [
   // Extend the Next.js and TypeScript configurations
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 
-  // Add custom rules
+  // Custom rules for specific file patterns
   {
     files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"], // Apply to all JS/TS files
     rules: {
@@ -25,6 +25,19 @@ const eslintConfig = [
       "no-multiple-empty-lines": ["error", { max: 1 }], // Disallows multiple empty lines
       "no-extra-semi": "error", // Disallows unnecessary semicolons
       camelcase: "error", // Enforces camelCase naming convention
+      "react/no-array-index-key": "warn",
+      "react/react-in-jsx-scope": "off",
+      "no-undef": "off",
+    },
+  },
+
+  // Top-level settings
+  {
+    plugins: ["react"],
+    settings: {
+      react: {
+        version: "detect", // Automatically detect the React version
+      },
     },
   },
 ];
