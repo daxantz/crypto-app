@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={"antialiased"}>
+      <body>
         <div>
           <Link href={"/"}>Home</Link>
           <Link href={"/portfolio"}></Link>
