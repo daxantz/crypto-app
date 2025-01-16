@@ -1,5 +1,12 @@
+import Link from "next/link";
+
 const Navbar = () => {
-  return <nav></nav>;
+  return (
+    <nav>
+      <Link href={"/"}>Home</Link>
+      <Link href={"/portfolio"}>Portfolio</Link>
+    </nav>
+  );
 };
 
 export default Navbar;
