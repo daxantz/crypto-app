@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="max-w-[1750px] mx-auto border border-red-600">
         <Navbar />
 
         {children}
