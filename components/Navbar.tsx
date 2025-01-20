@@ -8,16 +8,16 @@ import currency from "@/public/icons/currency.png";
 import search from "@/public/icons/search.png";
 const Navbar = () => {
   return (
-    <nav className="flex justify-between border border-orange-400">
+    <nav className="flex justify-between">
       <div className="flex justify-center items-center gap-2">
         <Image src={logo} alt="logo" />
-        <span>Crypto App</span>
+        <span>Logoipsm</span>
       </div>
       <div className="flex gap-6">
         <div className="flex gap-2 justify-center items-center">
           <Image src={home} alt="home-icon" />
-          Home
-          <Link href={"/"}></Link>
+
+          <Link href={"/"}>Home</Link>
         </div>
 
         <div className="flex gap-2 justify-center items-center">
@@ -25,17 +25,23 @@ const Navbar = () => {
           <Link href={"/portfolio"}>Portfolio</Link>
         </div>
       </div>
-      <div className="border border-purple-500 flex gap-6 flex-shrink-0 ">
-        <div className="flex justify-center items-center">
-          <Image src={search} alt="search-icon" />
+      <div className=" flex gap-6 flex-shrink-0 relative ">
+        <div className="flex justify-center items-center relative rounded-md ">
+          <Image
+            className="object-contain absolute left-3"
+            src={search}
+            alt="search-icon"
+            width={20}
+            height={20}
+          />
           <input
-            className="bg-[#191925] px-4 py-2 w-80 h-12"
+            className="bg-[#191925] px-12 py-2 w-80 h-12 "
             type="text"
             placeholder="Search..."
           />
         </div>
 
-        <div className="flex py-3 px-4 bg-[#191925] gap-2 justify-center items-center">
+        <div className="flex py-3 px-4 bg-[#191925] gap-2 justify-center items-center rounded-md">
           <Image src={currency} alt="dollar-sign" />
           <select className="bg-[#191925]" name="currencies" id="currencies">
             <option>USD</option>
@@ -46,7 +52,7 @@ const Navbar = () => {
           </select>
         </div>
 
-        <button className="bg-[#191925] w-12 h-12 flex items-center justify-center">
+        <button className="bg-[#191925] w-12 h-12 flex items-center justify-center rounded-md">
           <Image src={sun} alt="sun-icon" />
         </button>
       </div>
