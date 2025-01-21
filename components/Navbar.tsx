@@ -3,9 +3,10 @@ import Link from "next/link";
 import logo from "@/public/images/Logo.png";
 import home from "@/public/icons/home-2.png";
 import portfolio from "@/public/icons/portfolio.png";
-import sun from "@/public/icons/sun.png";
+
 import currency from "@/public/icons/currency.png";
 import search from "@/public/icons/search.png";
+import { ModeToggle } from "./ModeToggle";
 const Navbar = () => {
   return (
     <nav className="flex justify-between">
@@ -35,15 +36,19 @@ const Navbar = () => {
             height={20}
           />
           <input
-            className="bg-[#191925] px-12 py-2 w-80 h-12 "
+            className="bg-[#CCCCFA66] dark:bg-[#191925] px-12 py-2 w-80 h-12 "
             type="text"
             placeholder="Search..."
           />
         </div>
 
-        <div className="flex py-3 px-4 bg-[#191925] gap-2 justify-center items-center rounded-md">
+        <div className="flex py-3 px-4 bg-[#CCCCFA66] dark:bg-[#191925] gap-2 justify-center items-center rounded-md">
           <Image src={currency} alt="dollar-sign" />
-          <select className="bg-[#191925]" name="currencies" id="currencies">
+          <select
+            className="dark:bg-[#191925]"
+            name="currencies"
+            id="currencies"
+          >
             <option>USD</option>
             <option>GBP</option>
             <option>EUR</option>
@@ -52,9 +57,7 @@ const Navbar = () => {
           </select>
         </div>
 
-        <button className="bg-[#191925] w-12 h-12 flex items-center justify-center rounded-md">
-          <Image src={sun} alt="sun-icon" />
-        </button>
+        <ModeToggle />
       </div>
     </nav>
   );
