@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="max-w-[1750px] mx-auto border border-red-600">
+      <body>
         <StoreProvider>
           <MarketData />
           <ThemeProvider
@@ -29,8 +29,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Navbar />
-
-            {children}
+            <main className="max-w-[1790px] mx-auto border border-red-600">
+              {children}
+            </main>
           </ThemeProvider>
         </StoreProvider>
       </body>
