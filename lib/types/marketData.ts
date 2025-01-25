@@ -8,5 +8,9 @@ export type marketData = {
     total_volume: {
       [key: string]: number;
     };
+    total_market_cap: {
+      [key: string]: number;
+    };
+    markets: number;
   };
 };
