@@ -9,7 +9,7 @@ import search from "@/public/icons/search.png";
 import { ModeToggle } from "./ModeToggle";
 const Navbar = () => {
   return (
-    <nav className="flex justify-between">
+    <nav className="flex justify-between  px-[72px] py-4">
       <div className="flex justify-center items-center gap-2">
         <Image src={logo} alt="logo" />
         <span>Logoipsm</span>
@@ -36,7 +36,7 @@ const Navbar = () => {
             height={20}
           />
           <input
-            className="bg-[#CCCCFA66] dark:bg-[#191925] px-12 py-2 w-80 h-12 "
+            className="bg-[#CCCCFA66] dark:bg-[#191925] px-12 py-2 w-80 h-12 rounded-md "
             type="text"
             placeholder="Search..."
           />

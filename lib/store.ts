@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import coinReducer from "@/lib/coinSlice";
+import { cryptoApi } from "./cryptoApi";
 export const makeStore = () => {
   return configureStore({
-    reducer: { coins: coinReducer },
+    reducer: { coins: coinReducer, [cryptoApi.reducerPath]: cryptoApi.reducer },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(cryptoApi.middleware),
   });
 };
 

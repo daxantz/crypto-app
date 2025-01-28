@@ -11,3 +11,15 @@ body {
     --radius: 0.5rem;
   }
 }
+
+@layer utilities {
+  .progress-bar::-webkit-progress-bar {
+    @apply bg-gray-200 rounded-lg  h-[60%];
+  }
+  .progress-bar.btc::-webkit-progress-value {
+    @apply bg-orange-500 rounded-lg;
+  }
+  .progress-bar.eth::-webkit-progress-value {
+    @apply bg-[#849DFF] rounded-lg;
+  }
+}
