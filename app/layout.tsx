@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import MarketData from "@/components/MarketData";
 
 import StoreProvider from "@/components/StoreProvider";
 
@@ -19,8 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="max-w-[1750px] mx-auto border border-red-600">
+      <body>
         <StoreProvider>
+          <MarketData />
+
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -29,7 +32,9 @@ export default function RootLayout({
           >
             <Navbar />
 
-            {children}
+            <main className="max-w-[1790px] mx-auto border border-red-600">
+              {children}
+            </main>
           </ThemeProvider>
         </StoreProvider>
       </body>
