@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Currency } from "lucide-react";
-export type Currency = "USD" | "GBP" | "EUR" | "BTC" | "ETH";
-const initialState = { currency: "USD" as Currency };
+export type Currency = "usd" | "gbp" | "eur" | "btc" | "eth";
+const initialState = { currency: "usd" as Currency };
 const currencySlice = createSlice({
   name: "currency",
   initialState,
