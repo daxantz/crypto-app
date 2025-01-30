@@ -8,6 +8,7 @@ import currency from "@/public/icons/currency.png";
 
 import { ModeToggle } from "./ModeToggle";
 import SearchInput from "./SearchInput";
+import CurrencySelector from "./CurrencySelector";
 const Navbar = () => {
   return (
     <nav className="flex justify-between  px-[72px] py-4">
@@ -32,17 +33,7 @@ const Navbar = () => {
 
         <div className="flex py-3 px-4 bg-[#CCCCFA66] dark:bg-[#191925] gap-2 justify-center items-center rounded-md">
           <Image src={currency} alt="dollar-sign" />
-          <select
-            className="dark:bg-[#191925]"
-            name="currencies"
-            id="currencies"
-          >
-            <option>USD</option>
-            <option>GBP</option>
-            <option>EUR</option>
-            <option>BTC</option>
-            <option>ETH</option>
-          </select>
+          <CurrencySelector />
         </div>
 
         <ModeToggle />

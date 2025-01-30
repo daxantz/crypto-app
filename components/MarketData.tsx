@@ -8,8 +8,12 @@ import greenArrow from "@/public/icons/green-arrow.svg";
 import btc from "@/public/icons/bitcoin-icon.svg";
 import eth from "@/public/icons/eth-icon.svg";
 import Humanize from "humanize-plus";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
 const MarketData = () => {
   const { data, isLoading } = useGetMarketDataQuery();
+  const currency = useSelector((state: RootState) => state.currency.currency);
+
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -25,12 +29,15 @@ const MarketData = () => {
       <div className="flex gap-2">
         <Image src={greenArrow} alt="green-arrow-icon" width={20} height={20} />
         <span>
-          {Humanize.compactInteger(data?.data.total_market_cap["usd"] ?? 0, 2)}
+          {Humanize.compactInteger(
+            data?.data.total_market_cap[currency] ?? 0,
+            2
+          )}
         </span>
       </div>
       <div className="flex gap-2">
         <span>
-          ${Humanize.compactInteger(data?.data.total_volume["usd"] ?? 0, 2)}
+          ${Humanize.compactInteger(data?.data.total_volume[currency] ?? 0, 2)}
         </span>
       </div>
       <div className="flex gap-2 items-center">

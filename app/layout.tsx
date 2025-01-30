@@ -5,7 +5,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import MarketData from "@/components/MarketData";
-import StoreProvider from "./StoreProvider";
+
+import StoreProvider from "@/components/StoreProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body>
         <StoreProvider>
           <MarketData />
+
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -29,6 +31,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Navbar />
+
             <main className="max-w-[1790px] mx-auto border border-red-600">
               {children}
             </main>
