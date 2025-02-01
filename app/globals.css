@@ -6,6 +6,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.btn {
+  border: 1px solid transparent;
+  border-image-source: linear-gradient(to bottom right, #7878fa, #7878fa00);
+  border-image-slice: 1;
+  box-shadow: 4px 4px 20px 8px #7878fa26;
+}
 @layer base {
   :root {
     --radius: 0.5rem;
