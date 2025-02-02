@@ -41,7 +41,7 @@ const SearchInput = () => {
         value={searchValue}
       />
       {filteredCoins !== undefined && searchValue !== "" && (
-        <div className="max-h-[564px] w-[22.25rem] border border-red-500 overflow-scroll z-10 absolute bg-[#FFFFFF0D] p-4">
+        <div className="max-h-[564px] w-[22.25rem]  overflow-scroll z-10 absolute bg-[#FFFFFF0D] p-4">
           {filteredCoins?.map((coin) => (
             <Link key={coin.id} href={`/${coin.id}`}>
               <p className="hover:bg-[#ffffff47]">{coin.name}</p>
