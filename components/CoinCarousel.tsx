@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -13,19 +13,35 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import Image from "next/image";
 import Humanize from "humanize-plus";
+import { searchCoins } from "@/lib/types/searchCoin";
 const CoinCarousel = () => {
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
-  const { data, isLoading } = useGetTop10CurrenciesQuery(selectedCurrency);
+  const { data, isLoading } = useGetTop10CurrenciesQuery(selectedCurrency, {
+    refetchOnMountOrArgChange: false,
+  });
+
+  const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
   if (isLoading) return "loading...";
 
+  function handleClick(coinId: string) {
+    setSelectedCoin((coin) => {
+      if (coin?.id === coinId) return undefined;
+      return data?.find((coin) => coin.id === coinId);
+    });
+  }
+
   return (
-    <Carousel>
-      <CarouselContent className="flex gap-4 ">
+    <Carousel className="mt-20">
+      <p>Select the currency to view statistics</p>
+      <CarouselContent className="flex gap-4 p-4 ">
         {data?.map((coin) => (
           <CarouselItem
-            className="flex basis-1/8 gap-4 py-4 px-8 rounded-md   bg-[#6161D680]"
+            onClick={() => handleClick(coin.id)}
+            className={`flex basis-1/5 gap-4 py-4 px-8 rounded-md bg-[#191925]   ${
+              selectedCoin?.id === coin.id && "bg-[#6161D680] btn"
+            }`}
             key={coin.id}
           >
             <Image
