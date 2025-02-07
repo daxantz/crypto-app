@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { marketData } from "./types/marketData";
 import { searchCoins } from "./types/searchCoin";
 import { Currency } from "./currencySlice";
+import { chartCoin } from "./types/chartCoin";
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({
@@ -18,10 +19,18 @@ export const cryptoApi = createApi({
       query: (currency: Currency) =>
         `coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=10`,
     }),
+    getCoinChartData: build.query<
+      chartCoin,
+      { coinId: string; currency: Currency }
+    >({
+      query: ({ coinId, currency }) =>
+        `coins/${coinId}/market_chart?vs_currency=${currency}&days=128&interval=daily`,
+    }),
   }),
 });
 export const {
   useGetMarketDataQuery,
   useGetAllCurrenciesQuery,
   useGetTop10CurrenciesQuery,
+  useGetCoinChartDataQuery,
 } = cryptoApi;
