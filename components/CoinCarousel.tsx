@@ -8,7 +8,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useGetTop10CurrenciesQuery } from "@/lib/cryptoApi";
+import {
+  useGetCoinChartDataQuery,
+  useGetTop10CurrenciesQuery,
+} from "@/lib/cryptoApi";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import Image from "next/image";
@@ -16,14 +19,25 @@ import Humanize from "humanize-plus";
 import { searchCoins } from "@/lib/types/searchCoin";
 import Barchart from "./Barchart";
 const CoinCarousel = () => {
+  const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
   const { data, isLoading } = useGetTop10CurrenciesQuery(selectedCurrency, {
     refetchOnMountOrArgChange: false,
   });
-
-  const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
+  const {
+    currentData: coinData,
+    error: chartError,
+    isLoading: isCoinDataLoading,
+    isFetching,
+  } = useGetCoinChartDataQuery(
+    {
+      coinId: selectedCoin?.id || "bitcoin",
+      currency: selectedCurrency,
+    },
+    { skip: !selectedCoin?.id }
+  );
 
   useEffect(() => {
     if (data && data.length > 0 && !selectedCoin) {
@@ -33,7 +47,7 @@ const CoinCarousel = () => {
 
   function handleClick(coinId: string) {
     setSelectedCoin((coin) => {
-      if (coin?.id === coinId) return undefined;
+      if (coin?.id === coinId) return coin;
       return data?.find((coin) => coin.id === coinId);
     });
   }
@@ -46,10 +60,17 @@ const CoinCarousel = () => {
         <CarouselContent className="flex gap-4 p-4 ">
           {data?.map((coin) => (
             <CarouselItem
-              onClick={() => handleClick(coin.id)}
-              className={`flex basis-1/5 gap-4 py-4 px-8 rounded-md bg-[#191925]   ${
-                selectedCoin?.id === coin.id && "bg-[#6161D680] btn"
-              }`}
+              onClick={() => {
+                if (!isFetching) handleClick(coin.id);
+              }}
+              className={`flex basis-1/5 gap-4 py-4 px-8 rounded-md bg-[#191925] 
+                ${selectedCoin?.id === coin.id ? "bg-[#6161D680] btn " : ""}
+                ${
+                  isFetching
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
+                }
+              `}
               key={coin.id}
             >
               <Image
@@ -85,7 +106,13 @@ const CoinCarousel = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <Barchart coinId={"bitcoin"} />
+      {selectedCoin && coinData && (
+        <Barchart
+          coinData={coinData}
+          isLoading={isCoinDataLoading}
+          error={chartError}
+        />
+      )}
     </>
   );
 };
