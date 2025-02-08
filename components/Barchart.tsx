@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,10 +10,12 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { useGetCoinChartDataQuery } from "@/lib/cryptoApi";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/store";
 
+import Humanize from "humanize-plus";
+import { format } from "date-fns";
+import { chartCoin } from "@/lib/types/chartCoin";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -28,9 +30,10 @@ export const options = {
   plugins: {
     legend: {
       position: "top" as const,
+      display: false,
     },
     title: {
-      display: true,
+      display: false,
       text: "Chart.js Bar Chart",
     },
   },
@@ -48,6 +51,7 @@ export const options = {
     },
   },
 };
+
 const labels = [
   "01",
   "02",
@@ -74,18 +78,37 @@ const labels = [
   "23",
   "24",
 ];
-const Barchart = ({ coinId }: { coinId: string }) => {
-  const currency = useSelector((state: RootState) => state.currency.currency);
-  const {
-    data: coinData,
-    error,
-    isLoading,
-  } = useGetCoinChartDataQuery({
-    coinId: coinId,
-    currency: currency,
-  });
 
+const Barchart = ({
+  coinData,
+  isLoading,
+  error,
+}: {
+  coinData: chartCoin;
+  isLoading: boolean;
+  error: FetchBaseQueryError | SerializedError | undefined;
+}) => {
   const volumePrices = coinData?.total_volumes.map((array) => array[1]);
+  const latestVolume =
+    coinData?.total_volumes[coinData.total_volumes.length - 1][1];
+  const latestTime =
+    coinData?.total_volumes[coinData.total_volumes.length - 1][0];
+  const date = format(new Date(latestTime || Date.now()), "MMM d, yyyy");
+
+  const [gradient, setGradient] = useState<CanvasGradient | null>(null);
+  const chartRef = useRef<ChartJS<"bar", number[], string> | null>(null);
+
+  // Create gradient only once chartRef is available
+  useEffect(() => {
+    if (chartRef.current) {
+      const ctx = chartRef.current.ctx;
+
+      const gradient = ctx.createLinearGradient(0, 400, 0, 0);
+      gradient.addColorStop(0, "#56218a"); // Start color
+      gradient.addColorStop(1, "#B374F2"); // End color
+      setGradient(gradient);
+    }
+  }, [chartRef]);
 
   if (error) {
     if ("status" in error) {
@@ -101,14 +124,22 @@ const Barchart = ({ coinId }: { coinId: string }) => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Volume 24h",
         data: volumePrices,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: gradient || "rgba(0, 0, 0, 0.2)", // Apply gradient or fallback to a default color
         borderRadius: 10,
       },
     ],
   };
-  return <Bar options={options} data={data} />;
+
+  return (
+    <div className="bg-[#191932]">
+      <p>Volume 24h</p>
+      <p>{Humanize.compactInteger(latestVolume || 0, 2)}</p>
+      <p>{date}</p>
+      <Bar ref={chartRef} options={options} data={data} />
+    </div>
+  );
 };
 
 export default Barchart;
