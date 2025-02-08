@@ -24,7 +24,7 @@ export const cryptoApi = createApi({
       { coinId: string; currency: Currency }
     >({
       query: ({ coinId, currency }) =>
-        `coins/${coinId}/market_chart?vs_currency=${currency}&days=128&interval=daily`,
+        `coins/${coinId}/market_chart?vs_currency=${currency}&days=24&interval=daily`,
     }),
   }),
 });
