@@ -54,7 +54,7 @@ const CoinCarousel = () => {
 
   if (isLoading) return "loading...";
   return (
-    <>
+    <div>
       <Carousel className="mt-20">
         <p>Select the currency to view statistics</p>
         <CarouselContent className="flex gap-4 p-4 ">
@@ -113,7 +113,7 @@ const CoinCarousel = () => {
           error={chartError}
         />
       )}
-    </>
+    </div>
   );
 };
 

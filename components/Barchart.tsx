@@ -133,10 +133,12 @@ const Barchart = ({
   };
 
   return (
-    <div className="bg-[#191932]">
-      <p>Volume 24h</p>
-      <p>{Humanize.compactInteger(latestVolume || 0, 2)}</p>
-      <p>{date}</p>
+    <div className="bg-[#191932] w-[50%] flex flex-col gap-6 p-6 rounded-xl">
+      <p className="text-[20px] text-[#D1D1D1]">Volume 24h</p>
+      <p className="font-bold text-2xl">
+        ${Humanize.compactInteger(latestVolume || 0, 2)}
+      </p>
+      <p className="text-[#B9B9BA] ">{date}</p>
       <Bar ref={chartRef} options={options} data={data} />
     </div>
   );
