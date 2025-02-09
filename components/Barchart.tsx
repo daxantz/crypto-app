@@ -98,14 +98,12 @@ const Barchart = ({
   const [gradient, setGradient] = useState<CanvasGradient | null>(null);
   const chartRef = useRef<ChartJS<"bar", number[], string> | null>(null);
 
-  // Create gradient only once chartRef is available
   useEffect(() => {
     if (chartRef.current) {
       const ctx = chartRef.current.ctx;
 
       const gradient = ctx.createLinearGradient(0, 400, 0, 0);
-      gradient.addColorStop(0, "#56218a"); // Start color
-      gradient.addColorStop(1, "#B374F2"); // End color
+      gradient.addColorStop(0, "#56218a");
       setGradient(gradient);
     }
   }, [chartRef]);
