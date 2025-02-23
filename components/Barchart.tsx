@@ -88,7 +88,7 @@ const Barchart = ({
   isLoading: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;
 }) => {
-  const volumePrices = coinData?.total_volumes.map((array) => array[1]);
+  const volumePrices = coinData?.prices.map((array) => array[1]);
   const latestVolume =
     coinData?.total_volumes[coinData.total_volumes.length - 1][1];
   const latestTime =
