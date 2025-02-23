@@ -18,6 +18,7 @@ import Image from "next/image";
 import Humanize from "humanize-plus";
 import { searchCoins } from "@/lib/types/searchCoin";
 import Barchart from "./Barchart";
+import Graphchart from "./Graphchart";
 const CoinCarousel = () => {
   const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
   const selectedCurrency = useSelector(
@@ -46,10 +47,12 @@ const CoinCarousel = () => {
   }, [data, selectedCoin]);
 
   function handleClick(coinId: string) {
-    setSelectedCoin((coin) => {
-      if (coin?.id === coinId) return coin;
-      return data?.find((coin) => coin.id === coinId);
-    });
+    setTimeout(() => {
+      setSelectedCoin((coin) => {
+        if (coin?.id === coinId) return coin;
+        return data?.find((coin) => coin.id === coinId);
+      });
+    }, 100);
   }
 
   if (isLoading) return "loading...";
@@ -107,11 +110,18 @@ const CoinCarousel = () => {
         <CarouselNext />
       </Carousel>
       {selectedCoin && coinData && (
-        <Barchart
-          coinData={coinData}
-          isLoading={isCoinDataLoading}
-          error={chartError}
-        />
+        <div className="flex">
+          <Barchart
+            coinData={coinData}
+            isLoading={isCoinDataLoading}
+            error={chartError}
+          />
+          <Graphchart
+            coinData={coinData}
+            isLoading={isCoinDataLoading}
+            error={chartError}
+          />
+        </div>
       )}
     </div>
   );
