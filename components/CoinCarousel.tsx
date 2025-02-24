@@ -110,13 +110,14 @@ const CoinCarousel = () => {
         <CarouselNext />
       </Carousel>
       {selectedCoin && coinData && (
-        <div className="flex">
-          <Barchart
+        <div className="flex gap-8">
+          <Graphchart
             coinData={coinData}
             isLoading={isCoinDataLoading}
             error={chartError}
+            selectedCoin={selectedCoin}
           />
-          <Graphchart
+          <Barchart
             coinData={coinData}
             isLoading={isCoinDataLoading}
             error={chartError}
