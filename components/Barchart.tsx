@@ -89,8 +89,7 @@ const Barchart = ({
   error: FetchBaseQueryError | SerializedError | undefined;
 }) => {
   const volumePrices = coinData?.prices.map((array) => array[1]);
-  const latestVolume =
-    coinData?.total_volumes[coinData.total_volumes.length - 1][1];
+  const latestPrice = coinData?.prices[coinData.prices.length - 1][1];
   const latestTime =
     coinData?.total_volumes[coinData.total_volumes.length - 1][0];
   const date = format(new Date(latestTime || Date.now()), "MMM d, yyyy");
@@ -131,10 +130,10 @@ const Barchart = ({
   };
 
   return (
-    <div className="bg-[#191932] w-[50%] flex flex-col gap-6 p-6 rounded-xl">
+    <div className="bg-[#1E1932] w-[50%] flex flex-col gap-6 p-6 rounded-xl">
       <p className="text-[20px] text-[#D1D1D1]">Volume 24h</p>
       <p className="font-bold text-2xl">
-        ${Humanize.compactInteger(latestVolume || 0, 2)}
+        ${Humanize.compactInteger(latestPrice || 0, 2)}
       </p>
       <p className="text-[#B9B9BA] ">{date}</p>
       <Bar ref={chartRef} options={options} data={data} />
