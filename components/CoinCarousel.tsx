@@ -19,8 +19,11 @@ import Humanize from "humanize-plus";
 import { searchCoins } from "@/lib/types/searchCoin";
 import Barchart from "./Barchart";
 import Graphchart from "./Graphchart";
+import IntervalSelector from "./IntervalSelector";
 const CoinCarousel = () => {
   const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
+  const [days, setDays] = useState("24");
+
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
@@ -36,8 +39,9 @@ const CoinCarousel = () => {
     {
       coinId: selectedCoin?.id || "bitcoin",
       currency: selectedCurrency,
+      days: days,
     },
-    { skip: !selectedCoin?.id }
+    { skip: !selectedCoin?.id, refetchOnMountOrArgChange: true }
   );
 
   useEffect(() => {
@@ -124,6 +128,7 @@ const CoinCarousel = () => {
           />
         </div>
       )}
+      <IntervalSelector setDays={setDays} days={days} />
     </div>
   );
 };
