@@ -21,10 +21,10 @@ export const cryptoApi = createApi({
     }),
     getCoinChartData: build.query<
       chartCoin,
-      { coinId: string; currency: Currency }
+      { coinId: string; currency: Currency; days: string }
     >({
-      query: ({ coinId, currency }) =>
-        `coins/${coinId}/market_chart?vs_currency=${currency}&days=24&interval=daily`,
+      query: ({ coinId, currency, days }) =>
+        `coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`,
     }),
   }),
 });

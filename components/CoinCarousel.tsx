@@ -18,8 +18,12 @@ import Image from "next/image";
 import Humanize from "humanize-plus";
 import { searchCoins } from "@/lib/types/searchCoin";
 import Barchart from "./Barchart";
+import Graphchart from "./Graphchart";
+import IntervalSelector from "./IntervalSelector";
 const CoinCarousel = () => {
   const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
+  const [days, setDays] = useState("24");
+
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
@@ -35,8 +39,9 @@ const CoinCarousel = () => {
     {
       coinId: selectedCoin?.id || "bitcoin",
       currency: selectedCurrency,
+      days: days,
     },
-    { skip: !selectedCoin?.id }
+    { skip: !selectedCoin?.id, refetchOnMountOrArgChange: true }
   );
 
   useEffect(() => {
@@ -46,10 +51,12 @@ const CoinCarousel = () => {
   }, [data, selectedCoin]);
 
   function handleClick(coinId: string) {
-    setSelectedCoin((coin) => {
-      if (coin?.id === coinId) return coin;
-      return data?.find((coin) => coin.id === coinId);
-    });
+    setTimeout(() => {
+      setSelectedCoin((coin) => {
+        if (coin?.id === coinId) return coin;
+        return data?.find((coin) => coin.id === coinId);
+      });
+    }, 100);
   }
 
   if (isLoading) return "loading...";
@@ -107,12 +114,21 @@ const CoinCarousel = () => {
         <CarouselNext />
       </Carousel>
       {selectedCoin && coinData && (
-        <Barchart
-          coinData={coinData}
-          isLoading={isCoinDataLoading}
-          error={chartError}
-        />
+        <div className="flex gap-8">
+          <Graphchart
+            coinData={coinData}
+            isLoading={isCoinDataLoading}
+            error={chartError}
+            selectedCoin={selectedCoin}
+          />
+          <Barchart
+            coinData={coinData}
+            isLoading={isCoinDataLoading}
+            error={chartError}
+          />
+        </div>
       )}
+      <IntervalSelector setDays={setDays} days={days} />
     </div>
   );
 };
