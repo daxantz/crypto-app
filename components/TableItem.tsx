@@ -16,6 +16,7 @@ import {
   Filler,
   Legend,
 } from "chart.js";
+import Link from "next/link";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -54,13 +55,14 @@ const TableItem = ({
   return (
     <tr className="flex  items-center gap-5  justify-around bg-[#191925] rounded-xl p-5">
       <td>{index + 1}</td>
-      <td className="flex gap-2 items-center">
-        <Image width={32} height={32} src={coin.image} alt="" />
-        <span>
-          {coin.name}({coin.symbol.toUpperCase()})
-        </span>
-      </td>
-
+      <Link href={coin.id}>
+        <td className="flex gap-2 items-center">
+          <Image width={32} height={32} src={coin.image} alt="" />
+          <span>
+            {coin.name}({coin.symbol.toUpperCase()})
+          </span>
+        </td>
+      </Link>
       <td className="">${Humanize.formatNumber(coin.current_price, 0)}</td>
       <td
         className={` ${
