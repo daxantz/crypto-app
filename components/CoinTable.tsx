@@ -65,49 +65,48 @@ const CoinTable = () => {
   }
 
   return (
-    <table className=" w-full border-collapse">
-      <thead>
-        <tr className="flex gap-5 justify-around py-4 px-5">
-          <th>#</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>1h%</th>
-          <th>24h%</th>
-          <th>7d%</th>
-          <th>24h volume / Market Cap</th>
-          <th>Circulating / Total supply</th>
-          <th>Last 7d</th>
-        </tr>
-      </thead>
+    <InfiniteScroll
+      className="flex flex-col gap-2"
+      dataLength={coins.length}
+      next={fetchData}
+      hasMore={true}
+      loader={<p> Loading...</p>}
+      endMessage={
+        <p>
+          {" "}
+          <b>Yay! You have seen it all</b>
+        </p>
+      }
+    >
+      <table className=" w-full border-collapse">
+        <thead>
+          <tr className="flex gap-5 justify-around py-4 px-5 ">
+            <th>#</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>1h%</th>
+            <th>24h%</th>
+            <th>7d%</th>
+            <th>24h volume / Market Cap</th>
+            <th>Circulating / Total supply</th>
+            <th>Last 7d</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <InfiniteScroll
-          className="flex flex-col gap-2"
-          dataLength={coins.length}
-          next={fetchData}
-          hasMore={true}
-          loader={
-            <tr>
-              <td colSpan={9} className="text-center">
-                Loading...
-              </td>
-            </tr>
-          }
-          endMessage={
-            <tr>
-              <td colSpan={9} className="text-center">
-                <b>Yay! You have seen it all</b>
-              </td>
-            </tr>
-          }
-        >
+        <tbody>
           {coins.map((coin, index) => (
             <TableItem coin={coin} key={coin.id} index={index} />
           ))}
-        </InfiniteScroll>
-      </tbody>
-      {error !== null && <p>{error}</p>}
-    </table>
+        </tbody>
+        <tfoot>
+          {error !== null && (
+            <tr>
+              <td>{error}</td>
+            </tr>
+          )}
+        </tfoot>
+      </table>
+    </InfiniteScroll>
   );
 };
 

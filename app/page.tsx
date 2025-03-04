@@ -5,7 +5,10 @@ export default function Home() {
   return (
     <div>
       <CoinCarousel />
-      <CoinTable />
+      <div className="mt-10">
+        <CoinTable />
+      </div>
+
       <p>coins</p>
     </div>
   );
