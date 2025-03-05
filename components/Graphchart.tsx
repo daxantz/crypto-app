@@ -42,6 +42,7 @@ export const options = {
   },
   scales: {
     x: {
+      display: false,
       grid: {
         display: false, // Hide X-axis grid lines
       },
