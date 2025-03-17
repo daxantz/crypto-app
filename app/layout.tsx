@@ -7,7 +7,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import MarketData from "@/components/MarketData";
 
 import StoreProvider from "@/components/StoreProvider";
-import PageSelector from "@/components/PageSelector";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,10 +32,7 @@ export default function RootLayout({
           >
             <Navbar />
 
-            <main className="max-w-[1790px] mx-auto ">
-              <PageSelector />
-              {children}
-            </main>
+            <main className="max-w-[1790px] mx-auto ">{children}</main>
           </ThemeProvider>
         </StoreProvider>
       </body>
