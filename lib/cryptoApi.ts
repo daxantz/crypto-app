@@ -3,6 +3,7 @@ import { marketData } from "./types/marketData";
 import { searchCoins } from "./types/searchCoin";
 import { Currency } from "./currencySlice";
 import { chartCoin } from "./types/chartCoin";
+import { CoinDetails } from "./types/coinDetails";
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({
@@ -26,6 +27,9 @@ export const cryptoApi = createApi({
       query: ({ coinId, currency, days }) =>
         `coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`,
     }),
+    getCoinById: build.query<CoinDetails, string>({
+      query: (coinId) => `coins/${coinId}`,
+    }),
   }),
 });
 export const {
@@ -33,4 +37,5 @@ export const {
   useGetAllCurrenciesQuery,
   useGetTop10CurrenciesQuery,
   useGetCoinChartDataQuery,
+  useGetCoinByIdQuery,
 } = cryptoApi;
