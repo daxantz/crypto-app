@@ -26,6 +26,12 @@ body {
   .progress-bar.btc::-webkit-progress-value {
     @apply bg-orange-500 rounded-lg;
   }
+  .progress-bar.success::-webkit-progress-value {
+    @apply bg-[#01F1E3] rounded-lg;
+  }
+  .progress-bar.success::-webkit-progress-bar {
+    @apply bg-[#01F1E380] rounded-lg  h-[60%];
+  }
   .progress-bar.eth::-webkit-progress-value {
     @apply bg-[#849DFF] rounded-lg;
   }
