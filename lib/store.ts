@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import coinReducer from "@/lib/coinSlice";
 import currencyReducer from "@/lib/currencySlice";
 import { cryptoApi } from "./cryptoApi";
+import portfolioReducer from "@/lib/portfolioSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
       coins: coinReducer,
       [cryptoApi.reducerPath]: cryptoApi.reducer,
       currency: currencyReducer,
+      portfolio: portfolioReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(cryptoApi.middleware),
