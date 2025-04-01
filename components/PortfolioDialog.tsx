@@ -13,21 +13,46 @@ import { Button } from "./ui/button";
 import CoinImageBox from "./CoinImageBox";
 import CoinSelect from "./CoinDropdown";
 import { useState } from "react";
+import { addCoin } from "@/lib/portfolioSlice";
+import { useDispatch } from "react-redux";
+
 export type selectedCoin = {
-  label: string;
-  value: string;
-  large: string;
-  id: string;
-  symbol: string;
-  name: string;
+  label?: string;
+  value?: string;
+  large?: string;
+  id?: string;
+  symbol?: string;
+  name?: string;
+  amount?: number;
+  purchasedDate?: Date;
+};
+
+export type selectedOptions = {
+  coinId?: string;
+  amount?: number;
+  purchasedDate?: Date | null;
 };
 const PortfolioDialog = () => {
   const [selectedCoin, setSelectedCoin] = useState<selectedCoin | null>(null);
+  const dispatch = useDispatch();
+
+  function handleChange(
+    option: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    setSelectedCoin((selectedCoin: selectedCoin | null) => {
+      return { ...selectedCoin, [option.target.id]: option.target.value };
+    });
+  }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Asset</Button>
+        <Button
+          className="btn  dark:bg-[#6161D680] w-[244px]"
+          variant="outline"
+        >
+          Add Asset
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[886px] p-12  ">
         <DialogHeader className="mb-5">
@@ -50,7 +75,8 @@ const PortfolioDialog = () => {
               <select
                 className="w-full bg-[#191925] p-4 rounded-sm"
                 name=""
-                id=""
+                id="amount"
+                onChange={handleChange}
               >
                 <option value="" disabled selected hidden>
                   Purchased Amount
@@ -69,6 +95,8 @@ const PortfolioDialog = () => {
                 className="bg-[#191925] p-4 w-full rounded-sm"
                 placeholder="Purchased Date"
                 type="date"
+                onChange={handleChange}
+                id="purchasedDate"
               />
             </div>
             <div className="flex gap-4">
@@ -78,10 +106,17 @@ const PortfolioDialog = () => {
               >
                 <button>Cancel</button>
               </DialogTrigger>
-
-              <button className="rounded-lg flex-1 btn bg-[#6161D680] py-3 px-4">
-                Save and Continue{" "}
-              </button>
+              <DialogTrigger>
+                <button
+                  onClick={() => {
+                    dispatch(addCoin(selectedCoin));
+                    setSelectedCoin(null);
+                  }}
+                  className="rounded-lg flex-1 btn bg-[#6161D680] py-3 px-4"
+                >
+                  Save and Continue{" "}
+                </button>
+              </DialogTrigger>
             </div>
           </div>
         </div>
