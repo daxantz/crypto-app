@@ -2,7 +2,7 @@ import React from "react";
 import AsyncSelect from "react-select/async";
 import { StylesConfig } from "react-select";
 import { selectedCoin } from "./PortfolioDialog";
-
+import _ from "lodash";
 const customStyles: StylesConfig = {
   control: (provided) => ({
     ...provided,
@@ -86,11 +86,13 @@ const CoinSelect = ({ setSelectedCoin }: CoinSelectProps) => {
     setSelectedCoin(newValue as selectedCoin);
   };
 
+  const debouncedLoadOptions = _.debounce(loadOptions, 500);
+
   return (
     <AsyncSelect
       styles={customStyles}
       cacheOptions
-      loadOptions={loadOptions}
+      loadOptions={debouncedLoadOptions}
       defaultOptions
       placeholder="Select Coins"
       onChange={handleChange}
