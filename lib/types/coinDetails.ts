@@ -29,6 +29,9 @@ export type CoinDetails = {
     ath: {
       [currency: string]: number;
     };
+    ath_change_percentage: {
+      [currency: string]: number;
+    };
     atl_date: {
       [currency: string]: string;
     };
