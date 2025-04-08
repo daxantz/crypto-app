@@ -20,10 +20,12 @@ import { searchCoins } from "@/lib/types/searchCoin";
 import Barchart from "./Barchart";
 import Graphchart from "./Graphchart";
 import IntervalSelector from "./IntervalSelector";
+import CompareButton from "./CompareButton";
+
 const CoinCarousel = () => {
   const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
   const [days, setDays] = useState("24");
-
+  const [isComparing, setIsComparing] = useState(false);
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
@@ -63,7 +65,13 @@ const CoinCarousel = () => {
   return (
     <div>
       <Carousel className="mt-20">
-        <p>Select the currency to view statistics</p>
+        <div className="flex justify-between">
+          <p className="self-end">Select the currency to view statistics</p>
+          <CompareButton
+            isComparing={isComparing}
+            setIsComparing={setIsComparing}
+          />
+        </div>
         <CarouselContent className="flex gap-4 p-4 ">
           {data?.map((coin) => (
             <CarouselItem
