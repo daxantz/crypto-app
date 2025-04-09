@@ -24,11 +24,16 @@ import CompareButton from "./CompareButton";
 
 const CoinCarousel = () => {
   const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
+
+  const [selectedCoins, setSelectedCoins] = useState<searchCoins[] | undefined>(
+    []
+  );
   const [days, setDays] = useState("24");
   const [isComparing, setIsComparing] = useState(false);
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
+
   const { data, isLoading } = useGetTop10CurrenciesQuery(selectedCurrency, {
     refetchOnMountOrArgChange: false,
   });
@@ -50,15 +55,24 @@ const CoinCarousel = () => {
     if (data && data.length > 0 && !selectedCoin) {
       setSelectedCoin(data[0]);
     }
+    if (selectedCoin) {
+      setSelectedCoins([selectedCoin]);
+    }
   }, [data, selectedCoin]);
 
   function handleClick(coinId: string) {
-    setTimeout(() => {
-      setSelectedCoin((coin) => {
-        if (coin?.id === coinId) return coin;
-        return data?.find((coin) => coin.id === coinId);
+    if (selectedCoin && isComparing) {
+      const compareCoin = data?.find((coin) => coin.id === coinId);
+
+      setSelectedCoins(() => {
+        if (compareCoin) return compareCoin && [selectedCoin, compareCoin];
       });
-    }, 100);
+      return;
+    }
+    setSelectedCoin((coin) => {
+      if (coin?.id === coinId) return coin;
+      return data?.find((coin) => coin.id === coinId);
+    });
   }
 
   if (isLoading) return "loading...";
@@ -70,13 +84,14 @@ const CoinCarousel = () => {
           <CompareButton
             isComparing={isComparing}
             setIsComparing={setIsComparing}
+            setSelectedCoins={setSelectedCoins}
           />
         </div>
         <CarouselContent className="flex gap-4 p-4 ">
           {data?.map((coin) => (
             <CarouselItem
               onClick={() => {
-                if (!isFetching) handleClick(coin.id);
+                handleClick(coin.id);
               }}
               className={`flex basis-1/5 gap-4 py-4 px-8 rounded-md bg-[#191925] 
                 ${selectedCoin?.id === coin.id ? "bg-[#6161D680] btn " : ""}
@@ -85,6 +100,14 @@ const CoinCarousel = () => {
                     ? "opacity-50 cursor-not-allowed"
                     : "cursor-pointer"
                 }
+                ${
+                  selectedCoins &&
+                  selectedCoins[1] &&
+                  selectedCoins[1].id === coin.id
+                    ? "bg-[#6161D680] btn"
+                    : ""
+                }
+
               `}
               key={coin.id}
             >
