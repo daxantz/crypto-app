@@ -1,14 +1,28 @@
 import React from "react";
 import Image from "next/image";
 import comparsion from "@/public/icons/comparison.svg";
+import { searchCoins } from "@/lib/types/searchCoin";
 type CompareButtonProps = {
   isComparing: boolean;
   setIsComparing: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedCoins: React.Dispatch<
+    React.SetStateAction<searchCoins[] | undefined>
+  >;
 };
-const CompareButton = ({ isComparing, setIsComparing }: CompareButtonProps) => {
+const CompareButton = ({
+  isComparing,
+  setIsComparing,
+  setSelectedCoins,
+}: CompareButtonProps) => {
+  function toggleComparisonMode() {
+    if (isComparing) {
+      setSelectedCoins([]);
+    }
+    setIsComparing((isComparing) => !isComparing);
+  }
   return (
     <button
-      onClick={() => setIsComparing((isComparing) => !isComparing)}
+      onClick={toggleComparisonMode}
       className="bg-[#232336] py-3 px-6 rounded-md flex gap-2"
     >
       {" "}
