@@ -11,29 +11,37 @@ import {
 import {
   useGetCoinChartDataQuery,
   useGetTop10CurrenciesQuery,
+  usePrefetch,
 } from "@/lib/cryptoApi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import Image from "next/image";
 import Humanize from "humanize-plus";
-import { searchCoins } from "@/lib/types/searchCoin";
+
 import Barchart from "./Barchart";
 import Graphchart from "./Graphchart";
 import IntervalSelector from "./IntervalSelector";
 import CompareButton from "./CompareButton";
-
+import { setSelectedCoin, setSelectedCoins } from "@/lib/coinSlice";
 const CoinCarousel = () => {
-  const [selectedCoin, setSelectedCoin] = useState<searchCoins | undefined>();
+  const prefetchChartData = usePrefetch("getCoinChartData");
 
-  const [selectedCoins, setSelectedCoins] = useState<searchCoins[] | undefined>(
-    []
-  );
   const [days, setDays] = useState("24");
-  const [isComparing, setIsComparing] = useState(false);
+  const isComparing = useSelector(
+    (state: RootState) => state.coins.isComparing
+  );
+
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
+  const selectedCoin = useSelector(
+    (state: RootState) => state.coins.selectedCoin
+  );
+  const selectedCoins = useSelector(
+    (state: RootState) => state.coins.compareCoins
+  );
 
+  const dispatch = useDispatch();
   const { data, isLoading } = useGetTop10CurrenciesQuery(selectedCurrency, {
     refetchOnMountOrArgChange: false,
   });
@@ -48,48 +56,49 @@ const CoinCarousel = () => {
       currency: selectedCurrency,
       days: days,
     },
-    { skip: !selectedCoin?.id, refetchOnMountOrArgChange: true }
+    { skip: !selectedCoin?.id, refetchOnMountOrArgChange: false }
   );
 
   useEffect(() => {
     if (data && data.length > 0 && !selectedCoin) {
-      setSelectedCoin(data[0]);
+      dispatch(setSelectedCoin(data[0]));
+      dispatch(setSelectedCoins(data[0]));
     }
-    if (selectedCoin) {
-      setSelectedCoins([selectedCoin]);
-    }
-  }, [data, selectedCoin]);
+  }, [data, selectedCoin, dispatch]);
 
   function handleClick(coinId: string) {
+    // console.log("selected coin id and coin id", selectedCoins, coinId);
+    // if (selectedCoins.find((coin) => coin.id === coinId)) return;
     if (selectedCoin && isComparing) {
       const compareCoin = data?.find((coin) => coin.id === coinId);
 
-      setSelectedCoins(() => {
-        if (compareCoin) return compareCoin && [selectedCoin, compareCoin];
-      });
+      if (compareCoin) dispatch(setSelectedCoins(compareCoin));
+
       return;
     }
-    setSelectedCoin((coin) => {
-      if (coin?.id === coinId) return coin;
-      return data?.find((coin) => coin.id === coinId);
-    });
+
+    dispatch(setSelectedCoin(data?.find((coin) => coin.id === coinId)));
   }
 
   if (isLoading) return "loading...";
+
   return (
     <div>
       <Carousel className="mt-20">
         <div className="flex justify-between">
           <p className="self-end">Select the currency to view statistics</p>
-          <CompareButton
-            isComparing={isComparing}
-            setIsComparing={setIsComparing}
-            setSelectedCoins={setSelectedCoins}
-          />
+          <CompareButton />
         </div>
         <CarouselContent className="flex gap-4 p-4 ">
           {data?.map((coin) => (
             <CarouselItem
+              onMouseOver={() =>
+                prefetchChartData({
+                  days: days,
+                  coinId: coin.id,
+                  currency: selectedCurrency,
+                })
+              }
               onClick={() => {
                 handleClick(coin.id);
               }}
@@ -101,9 +110,7 @@ const CoinCarousel = () => {
                     : "cursor-pointer"
                 }
                 ${
-                  selectedCoins &&
-                  selectedCoins[1] &&
-                  selectedCoins[1].id === coin.id
+                  isComparing && selectedCoins[1]?.id === coin.id
                     ? "bg-[#6161D680] btn"
                     : ""
                 }

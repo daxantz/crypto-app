@@ -1,24 +1,23 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import comparsion from "@/public/icons/comparison.svg";
-import { searchCoins } from "@/lib/types/searchCoin";
-type CompareButtonProps = {
-  isComparing: boolean;
-  setIsComparing: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedCoins: React.Dispatch<
-    React.SetStateAction<searchCoins[] | undefined>
-  >;
-};
-const CompareButton = ({
-  isComparing,
-  setIsComparing,
-  setSelectedCoins,
-}: CompareButtonProps) => {
+
+import { setIsComparing, setSelectedCoins } from "@/lib/coinSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+
+const CompareButton = () => {
+  const disptach = useDispatch();
+  const isComparing = useSelector(
+    (state: RootState) => state.coins.isComparing
+  );
+
   function toggleComparisonMode() {
     if (isComparing) {
-      setSelectedCoins([]);
+      disptach(setSelectedCoins(null));
     }
-    setIsComparing((isComparing) => !isComparing);
+    disptach(setIsComparing());
   }
   return (
     <button
