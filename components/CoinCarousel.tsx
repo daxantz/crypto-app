@@ -22,7 +22,7 @@ import { Currency } from "@/lib/currencySlice";
 import ChartContainer from "./ChartContainer";
 const CoinCarousel = () => {
   const dispatch = useDispatch();
-  const [days, setDays] = useState("24");
+  const [days, setDays] = useState("30");
 
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency

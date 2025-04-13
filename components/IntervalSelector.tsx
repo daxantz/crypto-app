@@ -8,7 +8,7 @@ const IntervalSelector = ({
   days: string;
 }) => {
   return (
-    <div className="flex gap-2 bg-[#232336] w-[28rem] rounded-sm mt-12">
+    <div className="flex gap-2 bg-[#232336] w-[28rem] rounded-sm mt-12 justify-evenly">
       <div
         onClick={(e) => setDays((e.target as HTMLInputElement).id)}
         id="1"
@@ -19,15 +19,6 @@ const IntervalSelector = ({
         1D
       </div>
 
-      <div
-        onClick={(e) => setDays((e.target as HTMLInputElement).id)}
-        id="7"
-        className={`py-2 px-5 rounded-md w-14 ${
-          days === "7" ? "btn bg-[#6161D680]" : ""
-        }`}
-      >
-        7D
-      </div>
       <div
         onClick={(e) => setDays((e.target as HTMLInputElement).id)}
         id="14"
@@ -63,15 +54,6 @@ const IntervalSelector = ({
         }`}
       >
         1Y
-      </div>
-      <div
-        onClick={(e) => setDays((e.target as HTMLInputElement).id)}
-        id="1826"
-        className={`py-2 px-5 rounded-md w-14 ${
-          days === "1826" ? "btn bg-[#6161D680]" : ""
-        }`}
-      >
-        5Y
       </div>
     </div>
   );
