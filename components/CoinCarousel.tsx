@@ -114,7 +114,7 @@ const CoinCard = ({
 
     dispatch(setSelectedCoin(data?.find((coin) => coin.id === coinId)));
     params.set("coinId", coinId);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   }
   return (
     <CarouselItem

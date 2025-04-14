@@ -17,7 +17,7 @@ const IntervalSelector = ({
     const newday = (e.target as HTMLInputElement).id;
     setDays(newday);
     params.set("days", newday);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   }
   return (
     <div className="flex gap-2 bg-[#232336] w-[28rem] rounded-sm mt-12 justify-evenly">
