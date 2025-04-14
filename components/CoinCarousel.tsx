@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useGetTop10CurrenciesQuery, usePrefetch } from "@/lib/cryptoApi";
+import { useGetTop10CurrenciesQuery } from "@/lib/cryptoApi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import Image from "next/image";
@@ -20,6 +20,7 @@ import { setSelectedCoin, setSelectedCoins } from "@/lib/coinSlice";
 import { searchCoins } from "@/lib/types/searchCoin";
 import { Currency } from "@/lib/currencySlice";
 import ChartContainer from "./ChartContainer";
+import { useRouter, useSearchParams } from "next/navigation";
 const CoinCarousel = () => {
   const dispatch = useDispatch();
   const [days, setDays] = useState("30");
@@ -55,7 +56,6 @@ const CoinCarousel = () => {
           {data?.map((coin) => (
             <CoinCard
               coin={coin}
-              days={days}
               data={data}
               selectedCurrency={selectedCurrency}
               isLoading={isLoading}
@@ -77,19 +77,21 @@ export default CoinCarousel;
 
 type CoinCardProps = {
   coin: searchCoins;
-  days: string;
   data: searchCoins[];
   selectedCurrency: Currency;
   isLoading: boolean;
 };
 const CoinCard = ({
   coin,
-  days,
+
   data,
   selectedCurrency,
   isLoading,
 }: CoinCardProps) => {
-  const prefetchChartData = usePrefetch("getCoinChartData");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+
   const dispatch = useDispatch();
   const isComparing = useSelector(
     (state: RootState) => state.coins.isComparing
@@ -111,16 +113,11 @@ const CoinCard = ({
     }
 
     dispatch(setSelectedCoin(data?.find((coin) => coin.id === coinId)));
+    params.set("coinId", coinId);
+    router.push(`?${params.toString()}`);
   }
   return (
     <CarouselItem
-      onMouseOver={() =>
-        prefetchChartData({
-          days: days,
-          coinId: coin.id,
-          currency: selectedCurrency,
-        })
-      }
       onClick={() => {
         handleClick(coin.id);
       }}

@@ -1,3 +1,5 @@
+import { useSearchParams, useRouter } from "next/navigation";
+
 import React from "react";
 
 const IntervalSelector = ({
@@ -7,10 +9,20 @@ const IntervalSelector = ({
   setDays: React.Dispatch<React.SetStateAction<string>>;
   days: string;
 }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
+
+  function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const newday = (e.target as HTMLInputElement).id;
+    setDays(newday);
+    params.set("days", newday);
+    router.push(`?${params.toString()}`);
+  }
   return (
     <div className="flex gap-2 bg-[#232336] w-[28rem] rounded-sm mt-12 justify-evenly">
       <div
-        onClick={(e) => setDays((e.target as HTMLInputElement).id)}
+        onClick={handleClick}
         id="1"
         className={`py-2 px-5 rounded-md w-14 ${
           days === "1" ? "btn bg-[#6161D680" : ""
@@ -20,7 +32,7 @@ const IntervalSelector = ({
       </div>
 
       <div
-        onClick={(e) => setDays((e.target as HTMLInputElement).id)}
+        onClick={handleClick}
         id="14"
         className={`py-2 px-5 rounded-md w-14 ${
           days === "14" ? "btn bg-[#6161D680] " : ""
@@ -29,7 +41,7 @@ const IntervalSelector = ({
         14D
       </div>
       <div
-        onClick={(e) => setDays((e.target as HTMLInputElement).id)}
+        onClick={handleClick}
         id="30"
         className={`py-2 px-5 rounded-md w-14 ${
           days === "30" ? "btn bg-[#6161D680]" : ""
@@ -38,7 +50,7 @@ const IntervalSelector = ({
         1M
       </div>
       <div
-        onClick={(e) => setDays((e.target as HTMLInputElement).id)}
+        onClick={handleClick}
         id="7"
         className={`py-2 px-5 rounded-md w-14 ${
           days === "7" ? "btn bg-[#6161D680]" : ""
@@ -47,7 +59,7 @@ const IntervalSelector = ({
         1W
       </div>
       <div
-        onClick={(e) => setDays((e.target as HTMLInputElement).id)}
+        onClick={handleClick}
         id="365"
         className={`py-2 px-5 rounded-md w-14 ${
           days === "365" ? "btn bg-[#6161D680]" : ""
