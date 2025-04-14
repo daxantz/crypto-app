@@ -9,7 +9,7 @@ import { BatchedCoin } from "./types/batchedCoin";
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_CRYPTO_URL,
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   }),
   endpoints: (build) => ({
     getMarketData: build.query<marketData, void>({
@@ -19,15 +19,14 @@ export const cryptoApi = createApi({
       query: () => "coins/list",
     }),
     getTop10Currencies: build.query<searchCoins[], Currency>({
-      query: (currency: Currency) =>
-        `coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=10`,
+      query: (currency: Currency) => `api/top10?currency=${currency}`,
     }),
     getCoinChartData: build.query<
       chartCoin,
       { coinId: string; currency: Currency; days: string }
     >({
       query: ({ coinId, currency, days }) =>
-        `coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`,
+        `api/charts?currency=${currency}&coinId=${coinId}&days=${days}`,
     }),
     getCoinById: build.query<CoinDetails, string>({
       query: (coinId) => `coins/${coinId}`,
