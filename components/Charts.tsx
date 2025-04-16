@@ -21,6 +21,7 @@ import { RootState } from "@/lib/store";
 import { options } from "./Graphchart";
 import useGradient from "@/lib/hooks/useGradient";
 import { labels } from "@/lib/chartOptions";
+import { useMemo } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -49,34 +50,53 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
 
   const { gradient, lineRef, chartRef } = useGradient();
 
-  //coin 1 bar data
-  const latestPrice = coinData?.prices[coinData.prices.length - 1][1];
-  const prices = coinData?.prices.map((p) => Math.floor(p[1]));
-  const latestTime =
-    coinData?.total_volumes[coinData.total_volumes.length - 1][0];
-  //coin 1 line data
-  const volume = coinData?.total_volumes.map((array) => array[1]);
-  const latestVolume =
-    coinData?.total_volumes[coinData.total_volumes.length - 1][1];
+  const latestPrice = useMemo(() => {
+    return coinData?.prices?.at(-1)?.[1];
+  }, [coinData]);
 
-  //coin 2 bar data
-  const prices2 = coinData2?.prices.map((p) => Math.floor(p[1]));
-  const latestPrice2 = coinData2?.prices[coinData2.prices.length - 1][1];
-  //coin 2 line data
-  const volume2 = coinData2?.total_volumes.map((array) => array[1]);
-  const latestVolume2 =
-    coinData2?.total_volumes[coinData2.total_volumes.length - 1][1];
+  const prices = useMemo(() => {
+    return coinData?.prices?.map((p) => Math.floor(p[1]));
+  }, [coinData]);
+
+  const latestTime = useMemo(() => {
+    return coinData?.total_volumes?.at(-1)?.[0];
+  }, [coinData]);
+
+  const volume = useMemo(() => {
+    return coinData?.total_volumes?.map((array) => array[1]);
+  }, [coinData]);
+
+  const latestVolume = useMemo(() => {
+    return coinData?.total_volumes?.at(-1)?.[1];
+  }, [coinData]);
+
+  // Same for coinData2
+  const prices2 = useMemo(() => {
+    return coinData2?.prices?.map((p) => Math.floor(p[1]));
+  }, [coinData2]);
+
+  const latestPrice2 = useMemo(() => {
+    return coinData2?.prices?.at(-1)?.[1];
+  }, [coinData2]);
+
+  const volume2 = useMemo(() => {
+    return coinData2?.total_volumes?.map((array) => array[1]);
+  }, [coinData2]);
+
+  const latestVolume2 = useMemo(() => {
+    return coinData2?.total_volumes?.at(-1)?.[1];
+  }, [coinData2]);
   const date = format(new Date(latestTime || Date.now()), "MMM d, yyyy");
 
   if (error) {
     if ("status" in error) {
-      return <p>Error: {JSON.stringify(error.data)}</p>; // Handles API errors
+      return <p className="ml-28">Error: {error.status}</p>; // Handles API errors
     } else {
-      return <p>Error: {error.message}</p>; // Handles non-API errors
+      return <p className="ml-28">Error: {error.message}</p>; // Handles non-API errors
     }
   }
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading || !coinData?.prices?.length) return <p>Loading...</p>;
 
   const data = {
     labels,
