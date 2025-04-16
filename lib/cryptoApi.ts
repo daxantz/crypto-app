@@ -13,7 +13,7 @@ export const cryptoApi = createApi({
   }),
   endpoints: (build) => ({
     getMarketData: build.query<marketData, void>({
-      query: () => "global",
+      query: () => "api/marketData",
     }),
     getAllCurrencies: build.query<searchCoins[], void>({
       query: () => "coins/list",
