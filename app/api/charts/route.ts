@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_CRYPTO_URL}coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}&interval=daily`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 3600 }, cache: "force-cache" }
     );
     if (!res.ok) {
       throw new Error(`failed to get ${coinId}'s chart data`);
@@ -17,6 +17,9 @@ export async function GET(request: NextRequest) {
     const data = await res.json();
     return Response.json(data);
   } catch (error) {
-    if (error instanceof Error) return Response.json({ error: error.message });
+    if (error instanceof Error)
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+      });
   }
 }
