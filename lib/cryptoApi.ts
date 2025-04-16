@@ -40,6 +40,7 @@ export const cryptoApi = createApi({
         `coins/markets?vs_currency=${currency}&ids=${idString}`,
     }),
   }),
+  keepUnusedDataFor: 60 * 10,
 });
 export const {
   useGetMarketDataQuery,
@@ -48,4 +49,5 @@ export const {
   useGetCoinChartDataQuery,
   useGetCoinByIdQuery,
   useGetCoinsByIdsQuery,
+  usePrefetch,
 } = cryptoApi;
