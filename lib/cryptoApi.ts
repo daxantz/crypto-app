@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { marketData } from "./types/marketData";
-import { searchCoins } from "./types/searchCoin";
+import { queryCoin, searchCoins } from "./types/searchCoin";
 import { Currency } from "./currencySlice";
 import { chartCoin } from "./types/chartCoin";
 import { CoinDetails } from "./types/coinDetails";
@@ -15,8 +15,8 @@ export const cryptoApi = createApi({
     getMarketData: build.query<marketData, void>({
       query: () => "api/marketData",
     }),
-    getAllCurrencies: build.query<searchCoins[], void>({
-      query: () => "coins/list",
+    getAllCurrencies: build.query<queryCoin[], string>({
+      query: (query) => `api/search?search=${query}`,
     }),
     getTop10Currencies: build.query<searchCoins[], Currency>({
       query: (currency: Currency) => `api/top10?currency=${currency}`,
