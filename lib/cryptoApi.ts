@@ -34,7 +34,7 @@ export const cryptoApi = createApi({
       { idString: string; currency: string }
     >({
       query: ({ idString, currency }) =>
-        `coins/markets?vs_currency=${currency}&ids=${idString}`,
+        `api/portfolio/?currency=${currency}&ids=${idString}`,
     }),
   }),
   keepUnusedDataFor: 60 * 10,
