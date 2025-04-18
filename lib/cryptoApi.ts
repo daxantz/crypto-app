@@ -3,7 +3,7 @@ import { marketData } from "./types/marketData";
 import { queryCoin, searchCoins } from "./types/searchCoin";
 import { Currency } from "./currencySlice";
 import { chartCoin } from "./types/chartCoin";
-import { CoinDetails } from "./types/coinDetails";
+
 import { BatchedCoin } from "./types/batchedCoin";
 
 export const cryptoApi = createApi({
@@ -28,9 +28,7 @@ export const cryptoApi = createApi({
       query: ({ coinId, currency, days }) =>
         `api/charts?currency=${currency}&coinId=${coinId}&days=${days}`,
     }),
-    getCoinById: build.query<CoinDetails, string>({
-      query: (coinId) => `coins/${coinId}`,
-    }),
+
     getCoinsByIds: build.query<
       BatchedCoin[],
       { idString: string; currency: string }
@@ -46,7 +44,7 @@ export const {
   useGetAllCurrenciesQuery,
   useGetTop10CurrenciesQuery,
   useGetCoinChartDataQuery,
-  useGetCoinByIdQuery,
+
   useGetCoinsByIdsQuery,
   usePrefetch,
 } = cryptoApi;
