@@ -1,40 +1,24 @@
-"use client";
-
 import CoinImageBox from "@/components/CoinImageBox";
 import CopyLink from "@/components/CopyLink";
-import { useGetCoinByIdQuery } from "@/lib/cryptoApi";
-import { RootState } from "@/lib/store";
-
-import { useParams } from "next/navigation";
-import { useSelector } from "react-redux";
 
 import CoinPriceCard from "@/components/CoinPriceCard";
 import MarketDataCard from "@/components/MarketDataCard";
 import CoinDesciptionBox from "@/components/CoinDesciptionBox";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-const CoinDetails = () => {
-  const params = useParams();
-  const id = params.coinId as string;
-  const selectedCurrency = useSelector(
-    (state: RootState) => state.currency.currency
+import type { CoinDetails } from "@/lib/types/coinDetails";
+const CoinDetails = async ({ params }: { params: { coinId: string } }) => {
+  const id = params.coinId;
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_CRYPTO_URL}coins/${id}`,
+    { method: "GET", next: { revalidate: 3600 }, cache: "force-cache" }
   );
+  const coin: CoinDetails = await res.json();
+  const blockchainLink = coin?.links?.blockchain_site[2];
+  const btcLink = coin?.links?.blockchain_site[3];
+  const tokenLink = coin?.links?.blockchain_site[4];
+  const orgLink = coin?.links?.homepage[0];
 
-  const { coin, isLoading, isError } = useGetCoinByIdQuery(id, {
-    selectFromResult: ({ data, isError, isLoading }) => ({
-      coin: data,
-      isLoading,
-      isError,
-    }),
-  });
-  const blockchainLink = coin?.links.blockchain_site[2];
-  const btcLink = coin?.links.blockchain_site[3];
-  const tokenLink = coin?.links.blockchain_site[4];
-  const orgLink = coin?.links.homepage[0];
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError)
-    return <p>Sorry! There was a problem getting the data for this coin</p>;
   return (
     <>
       <div className="flex gap-4 items-center my-12">
@@ -51,7 +35,7 @@ const CoinDetails = () => {
             <div className="w-[19.06rem] h-[333px] flex flex-col justify-between ">
               <div className="h-[75%]">
                 <CoinImageBox
-                  image={coin?.image.large}
+                  image={coin?.image?.large}
                   title={coin?.name}
                   symbol={coin?.symbol}
                 />{" "}
@@ -60,12 +44,12 @@ const CoinDetails = () => {
               <CopyLink url={orgLink} />
             </div>
 
-            <CoinPriceCard coin={coin} selectedCurrency={selectedCurrency} />
+            <CoinPriceCard coin={coin} />
           </div>
           <CoinDesciptionBox coin={coin} />
         </div>
         <div className="flex flex-1 flex-col justify-between h-full gap-16  ">
-          <MarketDataCard coin={coin} selectedCurrency={selectedCurrency} />
+          <MarketDataCard coin={coin} />
           <div className="flex flex-col gap-6 ">
             {coin && (
               <>

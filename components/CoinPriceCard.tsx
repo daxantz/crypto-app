@@ -1,13 +1,17 @@
 import React from "react";
 import { Layers, Triangle } from "lucide-react";
 import { CoinDetails } from "@/lib/types/coinDetails";
-import { Currency } from "@/lib/currencySlice";
+
 import Humanize from "humanize-plus";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
 export type CardProps = {
   coin: CoinDetails | undefined;
-  selectedCurrency: Currency;
 };
-const CoinPriceCard = ({ coin, selectedCurrency }: CardProps) => {
+const CoinPriceCard = ({ coin }: CardProps) => {
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.currency.currency
+  );
   return (
     <div className="bg-[#1E1932] py-10 px-14 flex flex-col gap-6 rounded-xl w-[22.18rem] h-[333px]">
       <p className="font-bold text-4xl">
