@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Layers, Triangle } from "lucide-react";
 import { CoinDetails } from "@/lib/types/coinDetails";
