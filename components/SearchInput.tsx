@@ -68,7 +68,12 @@ const SearchInput = () => {
           }`}
         >
           {data?.map((coin) => (
-            <Link className="flex gap-3" key={coin.id} href={`/${coin.id}`}>
+            <Link
+              className="flex gap-3"
+              key={coin.id}
+              href={`/${coin.id}`}
+              onClick={() => setSearchValue("")}
+            >
               <Image src={coin.thumb} alt="coin logo" width={25} height={25} />
               <p className="hover:bg-[#ffffff47 self-center">{coin.name}</p>
             </Link>
