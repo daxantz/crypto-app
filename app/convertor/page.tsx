@@ -1,4 +1,4 @@
-import CoinConvertor from "@/components/CoinConvertor";
+import ConvertorContainer from "@/components/ConvertorContainer";
 import PageSelector from "@/components/PageSelector";
 
 const page = async () => {
@@ -18,10 +18,7 @@ const page = async () => {
       <div>
         <h2>Online currency convertor</h2>
         <p>4/25/25 12:23</p>
-        <div className="flex flex-1 border border-red-500 gap-6">
-          <CoinConvertor color="#191932" sellOrBuy="sell" coins={data} />
-          <CoinConvertor color="#1E1932" sellOrBuy="buy" coins={data} />
-        </div>
+        <ConvertorContainer data={data} />
       </div>
     </>
   );
