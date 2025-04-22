@@ -21,6 +21,7 @@ import { RootState } from "@/lib/store";
 import { options } from "./Graphchart";
 import useGradient from "@/lib/hooks/useGradient";
 import { labels } from "@/lib/chartOptions";
+import { useMemo } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -36,7 +37,7 @@ type ChartsProps = {
   error: FetchBaseQueryError | SerializedError | undefined;
   coinData2: chartCoin | undefined;
 };
-const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
+const Charts = ({ coinData, isLoading, coinData2 }: ChartsProps) => {
   const selectedCoin = useSelector(
     (state: RootState) => state.coins.selectedCoin
   );
@@ -49,34 +50,30 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
 
   const { gradient, lineRef, chartRef } = useGradient();
 
-  //coin 1 bar data
-  const latestPrice = coinData?.prices[coinData.prices.length - 1][1];
-  const prices = coinData?.prices.map((p) => Math.floor(p[1]));
-  const latestTime =
-    coinData?.total_volumes[coinData.total_volumes.length - 1][0];
-  //coin 1 line data
-  const volume = coinData?.total_volumes.map((array) => array[1]);
-  const latestVolume =
-    coinData?.total_volumes[coinData.total_volumes.length - 1][1];
+  const derivedValues = useMemo(() => {
+    return {
+      latestPrice: coinData?.prices?.at(-1)?.[1],
+      prices: coinData?.prices?.map((p) => Math.floor(p[1])),
+      latestTime: coinData?.total_volumes?.at(-1)?.[0],
+      latestVolume: coinData?.total_volumes?.at(-1)?.[1],
+      prices2: coinData2?.prices?.map((p) => Math.floor(p[1])),
+      latestPrice2: coinData2?.prices?.at(-1)?.[1],
+      volume2: coinData2?.total_volumes?.map((array) => array[1]),
+      latestVolume2: coinData2?.total_volumes?.at(-1)?.[1],
+      volume: coinData?.total_volumes?.map((array) => array[1]),
+    };
+  }, [
+    coinData?.prices,
+    coinData?.total_volumes,
+    coinData2?.prices,
+    coinData2?.total_volumes,
+  ]);
+  const date = format(
+    new Date(derivedValues.latestTime || Date.now()),
+    "MMM d, yyyy"
+  );
 
-  //coin 2 bar data
-  const prices2 = coinData2?.prices.map((p) => Math.floor(p[1]));
-  const latestPrice2 = coinData2?.prices[coinData2.prices.length - 1][1];
-  //coin 2 line data
-  const volume2 = coinData2?.total_volumes.map((array) => array[1]);
-  const latestVolume2 =
-    coinData2?.total_volumes[coinData2.total_volumes.length - 1][1];
-  const date = format(new Date(latestTime || Date.now()), "MMM d, yyyy");
-
-  if (error) {
-    if ("status" in error) {
-      return <p>Error: {JSON.stringify(error.data)}</p>; // Handles API errors
-    } else {
-      return <p>Error: {error.message}</p>; // Handles non-API errors
-    }
-  }
-
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading || !coinData?.prices?.length) return <p>Loading...</p>;
 
   const data = {
     labels,
@@ -84,7 +81,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
       ? [
           {
             label: "Main Coin",
-            data: volume,
+            data: derivedValues.volume,
             backgroundColor: gradient.barMain || "#7878FA",
             borderRadius: 10,
             barPercentage: 0.5,
@@ -93,7 +90,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
           },
           {
             label: "Second Coin",
-            data: volume2,
+            data: derivedValues.volume2,
             backgroundColor: gradient.barSecondary || "#D878FA",
             borderRadius: 10,
             barPercentage: 0.5,
@@ -104,7 +101,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
       : [
           {
             label: "Main Coin",
-            data: volume,
+            data: derivedValues.volume,
             backgroundColor: gradient.barMain || "#7878FA",
             borderRadius: 10,
             barPercentage: 0.5,
@@ -120,7 +117,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
       ? [
           {
             label: "Main Coin Volume",
-            data: prices,
+            data: derivedValues.prices,
             borderColor: "#7878FA",
             backgroundColor: gradient.lineMain || "#7878FA",
             borderWidth: 5,
@@ -131,7 +128,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
           },
           {
             label: "Second Coin Volume",
-            data: prices2,
+            data: derivedValues.prices2,
             borderColor: "#D878FA",
             backgroundColor: gradient.lineSecondary || "#D878FA",
             borderWidth: 5,
@@ -144,7 +141,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
       : [
           {
             label: "Main Coin Volume",
-            data: prices,
+            data: derivedValues.prices,
             borderColor: "#7878FA",
             backgroundColor: gradient.lineMain || "#7878FA",
             borderWidth: 5,
@@ -171,7 +168,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
           {selectedCoin?.name} ({selectedCoin?.symbol.toLocaleUpperCase()})
         </p>
         <p className={`font-bold text-2xl ${isComparing ? "hidden" : ""}`}>
-          ${Humanize.compactInteger(latestPrice || 0, 2)}
+          ${Humanize.compactInteger(derivedValues.latestPrice || 0, 2)}
         </p>
         <p
           className={`text-[#B9B9BA] ${
@@ -186,14 +183,14 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
             <div className="w-6 h-6 rounded-sm bg-[#7878FA]"></div>
             <span className="text-[#D1D1D1] text-xl font-normal">
               {selectedCoin?.name} $
-              {Humanize.compactInteger(latestPrice || 0, 2)}
+              {Humanize.compactInteger(derivedValues.latestPrice || 0, 2)}
             </span>
           </div>
           <div className="flex gap-6">
             <div className="w-6 h-6 rounded-sm bg-[#D878FA]"></div>
             <span className="text-[#D1D1D1] text-xl font-normal">
               {comparisonCoin?.name} $
-              {Humanize.compactInteger(latestPrice2 || 0, 2)}
+              {Humanize.compactInteger(derivedValues.latestPrice2 || 0, 2)}
             </span>
           </div>
         </div>
@@ -207,7 +204,7 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
           Volume 24h
         </p>
         <p className={`font-bold text-2xl ${isComparing ? "hidden" : ""}`}>
-          ${Humanize.compactInteger(latestVolume || 0, 2)}
+          ${Humanize.compactInteger(derivedValues.latestVolume || 0, 2)}
         </p>
         <p className="text-[#B9B9BA] ">{date}</p>
         <Bar ref={chartRef} options={options} data={data} />
@@ -216,14 +213,14 @@ const Charts = ({ coinData, isLoading, error, coinData2 }: ChartsProps) => {
             <div className="w-6 h-6 rounded-sm bg-[#7878FA]"></div>
             <span className="text-[#D1D1D1] text-xl font-normal">
               {selectedCoin?.name} $
-              {Humanize.compactInteger(latestVolume || 0, 2)}
+              {Humanize.compactInteger(derivedValues.latestVolume || 0, 2)}
             </span>
           </div>
           <div className="flex gap-6">
             <div className="w-6 h-6 rounded-sm bg-[#D878FA]"></div>
             <span className="text-[#D1D1D1] text-xl font-normal">
               {comparisonCoin?.name} $
-              {Humanize.compactInteger(latestVolume2 || 0, 2)}
+              {Humanize.compactInteger(derivedValues.latestVolume2 || 0, 2)}
             </span>
           </div>
         </div>
