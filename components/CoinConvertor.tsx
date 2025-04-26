@@ -18,17 +18,22 @@ type coinConvertorProps = {
   sellOrBuy: "buy" | "sell";
   coins: searchCoins[];
   selectedCoin: coin;
+  convertQuantity?: number;
+  setConvertQuantity?: React.Dispatch<React.SetStateAction<number>>;
+  price?: number;
 };
 const CoinConvertor = ({
   color,
   sellOrBuy,
   coins,
-
+  convertQuantity,
+  setConvertQuantity,
   selectedCoin,
+  price,
 }: coinConvertorProps) => {
   const dispatch = useDispatch();
   const currentPrice = selectedCoin?.currentPrice?.toFixed(2);
-
+  const value = sellOrBuy === "sell" ? convertQuantity : price?.toFixed(10);
   function handleCoinChange(coin: searchCoins) {
     if (sellOrBuy === "sell") {
       dispatch(
@@ -85,7 +90,18 @@ const CoinConvertor = ({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <input className="bg-[#191932]" type="number" name="" id="" />
+        <input
+          className="bg-[#191932]"
+          type="number"
+          name=""
+          id=""
+          value={value}
+          onChange={(e) =>
+            setConvertQuantity != null &&
+            setConvertQuantity(Number(e.target.value))
+          }
+          readOnly={sellOrBuy === "buy"}
+        />
       </div>
       <hr />
       <p>
