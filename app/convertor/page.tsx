@@ -12,12 +12,17 @@ const page = async () => {
   );
   const data = await res.json();
 
+  const date = new Date();
+  const dateString = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
+  const time = date.toLocaleTimeString();
   return (
     <div className="flex flex-col gap-10">
       <PageSelector />
       <div>
         <h2>Online currency convertor</h2>
-        <p>4/25/25 12:23</p>
+        <p className="text-[#9E9E9E]">
+          {dateString} {time}
+        </p>
         <ConvertorContainer data={data} />
       </div>
     </div>
