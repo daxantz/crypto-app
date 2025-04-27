@@ -42,7 +42,7 @@ const SearchInput = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <form>
+    <form className="hidden sm:block">
       <div className="flex justify-center items-center relative rounded-md ">
         <Image
           className="object-contain absolute left-3 top-3.5"

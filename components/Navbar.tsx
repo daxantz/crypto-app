@@ -9,34 +9,36 @@ import currency from "@/public/icons/currency.png";
 import { ModeToggle } from "./ModeToggle";
 import SearchInput from "./SearchInput";
 import CurrencySelector from "./CurrencySelector";
+import SearchButton from "./SearchButton";
 const Navbar = () => {
   return (
-    <nav className="flex justify-between  px-[72px] py-4">
-      <div className="flex justify-center items-center gap-2">
-        <Image src={logo} alt="logo" />
-        <span>Logoipsm</span>
+    <nav className="flex justify-between py-2 px-4">
+      <div className="self-center sm:flex sm:gap-4">
+        <Image src={logo} alt="logo" className="w-8 h-5 self-center" />
+        <span className="hidden sm:block sm:text-xl">Logoipsm</span>
       </div>
-      <div className="flex gap-6">
-        <div className="flex gap-2 justify-center items-center">
+      <div className="hidden lg:flex items-center gap-6">
+        <div className=" flex gap-[10px]">
           <Image src={home} alt="home-icon" />
-
           <Link href={"/"}>Home</Link>
         </div>
 
-        <div className="flex gap-2 justify-center items-center">
+        <div className="flex gap-[10px]">
           <Image src={portfolio} alt="home-icon" />
           <Link href={"/portfolio"}>Portfolio</Link>
         </div>
       </div>
-      <div className=" flex gap-6 flex-shrink-0 relative ">
-        <SearchInput />
+      <div>
+        <div className="flex gap-2">
+          <SearchInput />
+          <SearchButton />
+          <div className="bg-[#191925] py-3 px-4 rounded-md">
+            <Image className="hidden" src={currency} alt="dollar-sign" />
+            <CurrencySelector />
+          </div>
 
-        <div className="flex py-3 px-4 bg-[#CCCCFA66] dark:bg-[#191925] gap-2 justify-center items-center rounded-md">
-          <Image src={currency} alt="dollar-sign" />
-          <CurrencySelector />
+          <ModeToggle />
         </div>
-
-        <ModeToggle />
       </div>
     </nav>
   );
