@@ -6,6 +6,7 @@ export type searchCoins = {
   total_volume: number;
   price_change_percentage_24h: number;
   total_supply: number;
+  current_price: number;
 };
 
 export type queryCoin = {

@@ -5,6 +5,7 @@ import { Currency } from "./currencySlice";
 import { chartCoin } from "./types/chartCoin";
 
 import { BatchedCoin } from "./types/batchedCoin";
+import { rate } from "./types/rate";
 
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
@@ -36,15 +37,33 @@ export const cryptoApi = createApi({
       query: ({ idString, currency }) =>
         `api/portfolio/?currency=${currency}&ids=${idString}`,
     }),
+    getExhangeRates: build.query<
+      rate,
+      { currency1: string; currency2: string }
+    >({
+      query: ({ currency1, currency2 }) =>
+        `api/convertor/?c1=${currency1}&c2=${currency2}`,
+    }),
+    getGraphExhangeRates: build.query<
+      graphExchange,
+      { coin1Id: string; coin2Id: string }
+    >({
+      query: ({ coin1Id, coin2Id }) =>
+        `api/convertorGraph/?c1=${coin1Id}&c2=${coin2Id}`,
+    }),
   }),
   keepUnusedDataFor: 60 * 10,
 });
+
+type graphExchange = [string, number][];
+
 export const {
   useGetMarketDataQuery,
   useGetAllCurrenciesQuery,
   useGetTop10CurrenciesQuery,
   useGetCoinChartDataQuery,
-
+  useGetExhangeRatesQuery,
+  useGetGraphExhangeRatesQuery,
   useGetCoinsByIdsQuery,
   usePrefetch,
 } = cryptoApi;

@@ -7,7 +7,7 @@ import coinReducer from "@/lib/coinSlice";
 import currencyReducer from "@/lib/currencySlice";
 import { cryptoApi } from "./cryptoApi";
 import portfolioReducer, { addCoin, coin } from "@/lib/portfolioSlice";
-
+import conversionReducer from "@/lib/conversionSlice";
 export const listenerMiddleware = createListenerMiddleware();
 
 listenerMiddleware.startListening.withTypes<RootState, AppDispatch>()({
@@ -44,6 +44,7 @@ export const makeStore = () => {
       [cryptoApi.reducerPath]: cryptoApi.reducer,
       currency: currencyReducer,
       portfolio: portfolioReducer,
+      convertor: conversionReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()

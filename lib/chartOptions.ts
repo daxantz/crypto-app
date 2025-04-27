@@ -36,6 +36,7 @@ export const options = {
       },
     },
   },
+  maintainAspectRatio: false,
 };
 
 export const labels = [
