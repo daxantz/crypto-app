@@ -22,16 +22,24 @@ const CompareButton = () => {
   return (
     <button
       onClick={toggleComparisonMode}
-      className="bg-[#232336] py-3 px-6 rounded-md flex gap-2"
+      className="bg-[#232336] py-[8px] px-2 sm:py-3 sm:px-6 rounded-md flex gap-2"
     >
       {" "}
-      {isComparing && <span>X Exit Comparison</span>}
+      {isComparing && (
+        <span className="text-xs sm:text-sm self-center">
+          X Exit Comparison
+        </span>
+      )}
       <Image
-        className={`${isComparing && "hidden"}`}
+        className={`${isComparing && "hidden"} w-[13px] h-[13px] sm:size-auto`}
         src={comparsion}
         alt="comparison icon"
       />{" "}
-      <span className={`${isComparing && "hidden"}`}>Compare</span>
+      <span
+        className={`${isComparing && "hidden"} text-xs sm:text-sm self-center`}
+      >
+        Compare
+      </span>
     </button>
   );
 };
