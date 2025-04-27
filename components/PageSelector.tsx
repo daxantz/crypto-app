@@ -7,7 +7,7 @@ const PageSelector = () => {
   const pathName = usePathname();
 
   return (
-    <div>
+    <div className="hidden sm:block">
       <button
         className={` w-[15.25rem] ${
           pathName === "/" ? "bg-[#6161D680] btn" : "bg-[#232336]"
