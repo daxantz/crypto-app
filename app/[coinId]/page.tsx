@@ -8,9 +8,9 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { CoinDetails } from "@/lib/types/coinDetails";
 const CoinDetails = async ({ params }: { params: { coinId: string } }) => {
-  const id = params.coinId;
+  const searchParams = await params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_CRYPTO_URL}coins/${id}`,
+    `${process.env.NEXT_PUBLIC_BASE_CRYPTO_URL}coins/${searchParams.coinId}`,
     { method: "GET", next: { revalidate: 3600 }, cache: "force-cache" }
   );
   const coin: CoinDetails = await res.json();
