@@ -44,9 +44,18 @@ export const cryptoApi = createApi({
       query: ({ currency1, currency2 }) =>
         `api/convertor/?c1=${currency1}&c2=${currency2}`,
     }),
+    getGraphExhangeRates: build.query<
+      graphExchange,
+      { coin1Id: string; coin2Id: string }
+    >({
+      query: ({ coin1Id, coin2Id }) =>
+        `api/convertorGraph/?c1=${coin1Id}&c2=${coin2Id}`,
+    }),
   }),
   keepUnusedDataFor: 60 * 10,
 });
+
+type graphExchange = [string, number][];
 
 export const {
   useGetMarketDataQuery,
@@ -54,6 +63,7 @@ export const {
   useGetTop10CurrenciesQuery,
   useGetCoinChartDataQuery,
   useGetExhangeRatesQuery,
+  useGetGraphExhangeRatesQuery,
   useGetCoinsByIdsQuery,
   usePrefetch,
 } = cryptoApi;
