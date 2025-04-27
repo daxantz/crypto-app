@@ -13,14 +13,14 @@ const page = async () => {
   const data = await res.json();
 
   return (
-    <>
+    <div className="flex flex-col gap-10">
       <PageSelector />
       <div>
         <h2>Online currency convertor</h2>
         <p>4/25/25 12:23</p>
         <ConvertorContainer data={data} />
       </div>
-    </>
+    </div>
   );
 };
 

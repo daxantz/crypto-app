@@ -24,7 +24,7 @@ const ConvertorContainer = ({ data }: { data: searchCoins[] }) => {
   const finalPrice = coin1ToBtc != undefined ? coin1ToBtc * btcToCoin2 : 0;
 
   return (
-    <div>
+    <div className="mt-6">
       <div className="flex flex-1 gap-6">
         <CoinConvertor
           color="#191932"
