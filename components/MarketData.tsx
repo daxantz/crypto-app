@@ -17,16 +17,16 @@ const MarketData = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="flex gap-8 bg-[#353570] text-white  py-4 px-[72px] justify-center text-xs items-center">
-      <div className="flex gap-2">
+    <div className="flex gap-8 bg-[#353570] text-white p-4 justify-center text-xs items-center border-y border-[#FFFFFF1A]">
+      <div className="hidden sm:flex">
         <Image src={circle} alt="circle-icon" />
         <span>Coins {data?.data.active_cryptocurrencies}</span>
       </div>
-      <div className="flex gap-2">
+      <div className="hidden sm:flex">
         <Image src={exchangeIcon} alt="exchange-icon" />
         <span>Exchange {data?.data.markets}</span>
       </div>
-      <div className="flex gap-2">
+      <div className="hidden md:flex">
         <Image src={greenArrow} alt="green-arrow-icon" width={20} height={20} />
         <span>
           {Humanize.compactInteger(
@@ -35,25 +35,25 @@ const MarketData = () => {
           )}
         </span>
       </div>
-      <div className="flex gap-2">
+      <div>
         <span>
           ${Humanize.compactInteger(data?.data.total_volume[currency] ?? 0, 2)}
         </span>
       </div>
-      <div className="flex gap-2 items-center">
-        <Image src={btc} alt="bitcoin-icon" />
+      <div className="flex items-center gap-[5px]">
+        <Image src={btc} alt="bitcoin-icon" width={16} height={16} />
         <span>{Math.trunc(data?.data.market_cap_percentage["btc"] ?? 0)}%</span>
         <progress
-          className="progress-bar btc"
+          className="progress-bar btc w-[48px]"
           max={100}
           value={data?.data.market_cap_percentage["btc"]}
         />
       </div>
-      <div className="flex gap-2 items-center">
-        <Image src={eth} alt="ethereum-icon" />
+      <div className="flex items-center gap-[5px]">
+        <Image src={eth} alt="ethereum-icon" width={16} height={16} />
         <span>{Math.trunc(data?.data.market_cap_percentage["eth"] ?? 0)}%</span>
         <progress
-          className="progress-bar eth "
+          className="progress-bar eth w-[48px]"
           max={100}
           value={data?.data.market_cap_percentage["eth"]}
         />
