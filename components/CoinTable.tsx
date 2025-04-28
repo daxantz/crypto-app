@@ -80,20 +80,20 @@ const CoinTable = () => {
     >
       <table className=" w-full border-collapse">
         <thead>
-          <tr className="flex gap-5 justify-around py-4 px-5 ">
-            <th>#</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>1h%</th>
-            <th>24h%</th>
-            <th>7d%</th>
-            <th>24h volume / Market Cap</th>
-            <th>Circulating / Total supply</th>
-            <th>Last 7d</th>
+          <tr className="flex gap-5 sm:justify-around py-4 px-5 ">
+            <th className="hidden sm:table-cell">#</th>
+            <th className="hidden sm:table-cell">Name</th>
+            <th className="hidden sm:table-cell">Price</th>
+            <th className="hidden sm:table-cell">1h%</th>
+            <th className="hidden sm:table-cell">24h%</th>
+            <th className="hidden sm:table-cell">7d%</th>
+            <th className="hidden sm:table-cell">24h volume / Market Cap</th>
+            <th className="hidden sm:table-cell">Circulating / Total supply</th>
+            <th className="hidden sm:table-cell">Last 7d</th>
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="flex flex-col gap-1 sm:gap-2">
           {coins.map((coin, index) => (
             <TableItem coin={coin} key={coin.id} index={index} />
           ))}

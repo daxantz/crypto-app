@@ -54,13 +54,13 @@ const TableItem = ({
 
   return (
     <tr className="flex  items-center gap-5  justify-around bg-[#191925] rounded-xl p-5">
-      <td>{index + 1}</td>
+      <td className="hidden sm:table-cell">{index + 1}</td>
       <Link href={coin.id}>
         <td className="flex gap-2 items-center">
           <Image width={32} height={32} src={coin.image} alt="" />
-          <span>
-            {coin.name}({coin.symbol.toUpperCase()})
-          </span>
+
+          <span className="hidden sm:inline">{coin.name}</span>
+          <span>({coin.symbol.toUpperCase()})</span>
         </td>
       </Link>
       <td className="">${Humanize.formatNumber(coin.current_price, 0)}</td>
@@ -93,7 +93,7 @@ const TableItem = ({
         %
       </td>
       <td
-        className={` ${
+        className={`hidden sm:table-cell ${
           coin.price_change_percentage_7d_in_currency < 0
             ? "text-[#FE2264]"
             : "text-[#01F1E3]"
@@ -106,7 +106,7 @@ const TableItem = ({
         )}
         %
       </td>
-      <td className="flex gap-8 w-[470px]">
+      <td className="hidden sm:flex gap-8 w-[470px] ">
         <progress
           className="[&::-webkit-progress-bar]:rounded-sm [&::-webkit-progress-value]:rounded-sm [&::-webkit-progress-value]:bg-blue-400 h-2 w-[50%]"
           value={coin.market_cap_change_24h}
@@ -119,7 +119,7 @@ const TableItem = ({
         />
       </td>
 
-      <td>
+      <td className="hidden sm:table-cell">
         <div className="w-[9.37rem]">
           <Line data={data} options={options} />
         </div>
