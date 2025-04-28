@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import MarketData from "@/components/MarketData";
 
 import StoreProvider from "@/components/StoreProvider";
+import MobileMenu from "@/components/MobileMenu";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -38,6 +39,7 @@ export default function RootLayout({
             </div>
 
             <main className="max-w-[1790px] mx-auto mt-12 ">{children}</main>
+            <MobileMenu />
           </ThemeProvider>
         </StoreProvider>
       </body>
