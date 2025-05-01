@@ -19,8 +19,8 @@ const page = async () => {
     <div className="flex flex-col gap-10">
       <PageSelector />
       <div>
-        <h2>Online currency convertor</h2>
-        <p className="text-[#9E9E9E]">
+        <h2 className="text-xl font-medium">Online currency convertor</h2>
+        <p className="text-[#9E9E9E] text-sm font-normal">
           {dateString} {time}
         </p>
         <ConvertorContainer data={data} />

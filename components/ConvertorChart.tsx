@@ -120,7 +120,7 @@ const ConvertorChart = ({ coin1, coin2 }: convertorChartProps) => {
           {coin2.name} ({coin2.symbol})
         </span>
       </p>
-      <div className="flex h-[650px]">
+      <div className="h-[250px] sm:flex sm:h-[500px]">
         <Line
           className="flex-1 "
           ref={chartRef}

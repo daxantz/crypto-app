@@ -59,7 +59,9 @@ const CoinConvertor = ({
   }
 
   return (
-    <div className={`bg-[${color}] p-6 flex flex-col gap-10 rounded-2xl w-1/2`}>
+    <div
+      className={`bg-[${color}] p-6 flex flex-col gap-10 rounded-2xl sm:w-1/2`}
+    >
       <p>You {sellOrBuy}</p>
       <div className="flex justify-between ">
         <DropdownMenu>
@@ -91,7 +93,7 @@ const CoinConvertor = ({
           </DropdownMenuContent>
         </DropdownMenu>
         <input
-          className="bg-[#191932]"
+          className="bg-[#191932] w-1/4"
           type="number"
           name=""
           id=""
