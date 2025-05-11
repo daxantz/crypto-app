@@ -22,18 +22,29 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
   const hrChangePercentage = foundCoin?.price_change_percentage_24h;
 
   return (
-    <div className="flex rounded-lg">
-      <div className="bg-[#191932] w-[23.7rem] py-6 px-4 flex flex-col gap-8 rounded-l-lg">
-        <div className="flex gap-2">
-          <Image width={32} height={32} src={coin.image} alt="coin image" />
-
-          <h2 className="font-bold text-2xl">
-            {coin.name} ({coin.symbol.toUpperCase()})
-          </h2>
+    <div className="flex flex-col sm:flex-row rounded-lg">
+      <div className="bg-[#191932] sm:w-[23.7rem] py-6 px-4 flex flex-col gap-8 rounded-l-lg">
+        <div className="flex gap-2 justify-between sm:justify-start">
+          <Image
+            className="order-2"
+            width={32}
+            height={32}
+            src={coin.image}
+            alt="coin image"
+          />
+          <div>
+            <h2 className="text-base font-medium sm:font-bold sm:text-2xl">
+              {coin.name} ({coin.symbol.toUpperCase()})
+            </h2>
+            <p className="text-[#D1D1D1] text-sm sm:hidden ">
+              Recent purchase {coin.datePurchased.toString()}
+            </p>
+          </div>
         </div>
+
         <div className=" flex flex-col gap-2">
-          <p>Total Value</p>
-          <p className="font-bold text-3xl">
+          <p className="hidden sm:block">Total Value</p>
+          <p className="font-bold text-xl sm:text-3xl">
             ${totalValue && totalValue.toFixed(2)} {currency.toUpperCase()}
             <span
               className={`text-base ${
@@ -45,13 +56,16 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
               {athChangePercentage && athChangePercentage.toFixed(2)}%
             </span>
           </p>
-          <p className="text-[#D1D1D1] text-sm">
+          <p className="text-[#D1D1D1] text-sm hidden sm:block">
             Recent purchase {coin.datePurchased.toString()}
           </p>
         </div>
       </div>
-      <div className="bg-[#2D2D51] grid grid-cols-2 flex-1 py-6 px-4 gap-5 rounded-r-xl">
-        <div className=" border border-[#191932] rounded-lg px-2 py-3">
+      <div
+        className="bg-[#2D2D51] max-w-full grid grid-cols-2 
+   sm:flex-1 py-6 px-4 gap-5 sm:rounded-r-xl"
+      >
+        <div className=" border border-[#191932] rounded-lg px-2 py-3 ">
           <p>${coin.amountPurchased}</p>
           <p className="text-[#D1D1D1] text-sm">Amount purchased</p>
         </div>
@@ -77,7 +91,7 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
               {marketcapVsVolume?.toFixed(0)}%
             </span>{" "}
             <progress
-              className="progress-bar success flex-1   "
+              className="progress-bar success flex-1 max-w-ful   "
               max={100}
               value={marketcapVsVolume}
             />
