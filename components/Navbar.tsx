@@ -1,14 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/images/Logo.png";
 import home from "@/public/icons/home-2.png";
+import Home from "@/public/icons/Home.svg";
 import portfolio from "@/public/icons/portfolio.png";
 import currency from "@/public/icons/currency.png";
+import Layers from "@/public/icons/Layers.svg";
 import { ModeToggle } from "./ModeToggle";
 import SearchInput from "./SearchInput";
 import CurrencySelector from "./CurrencySelector";
 
+import { useTheme } from "next-themes";
+
 const Navbar = () => {
+  const { theme } = useTheme();
   return (
     <nav className="flex justify-between py-2 px-4">
       <div className="self-center hidden sm:flex sm:gap-4">
@@ -17,12 +24,13 @@ const Navbar = () => {
       </div>
       <div className="hidden lg:flex items-center gap-6">
         <div className=" flex gap-[10px]">
-          <Image src={home} alt="home-icon" />
+          <Image src={theme === "dark" ? home : Home} alt="home-icon" />
+
           <Link href={"/"}>Home</Link>
         </div>
 
         <div className="flex gap-[10px]">
-          <Image src={portfolio} alt="home-icon" />
+          <Image src={theme === "dark" ? portfolio : Layers} alt="home-icon" />
           <Link href={"/portfolio"}>Portfolio</Link>
         </div>
       </div>
