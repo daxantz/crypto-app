@@ -156,12 +156,12 @@ const Charts = ({ coinData, isLoading, coinData2 }: ChartsProps) => {
   return (
     <div className="flex-col flex gap-4 sm:flex-row sm:gap-8 w-full">
       <div
-        className={`bg-[#191932] sm:w-[50%] flex flex-col gap-6 p-6 rounded-xl ${
+        className={` bg-white border dark:border-none dark:bg-[#191932] sm:w-[50%] flex flex-col gap-6 p-6 rounded-xl ${
           isComparing ? "justify-between" : ""
         }`}
       >
         <p
-          className={`text-sm sm:text-[20px] text-[#D1D1D1] ${
+          className={`text-sm sm:text-[20px] text-[#191932] dark:text-[#D1D1D1] ${
             isComparing ? "hidden" : ""
           }`}
         >
@@ -199,9 +199,9 @@ const Charts = ({ coinData, isLoading, coinData2 }: ChartsProps) => {
           </div>
         </div>
       </div>
-      <div className="bg-[#1E1932] sm:w-[50%] flex flex-col gap-6 p-6 rounded-xl">
+      <div className="bg-white border dark:border-none dark:bg-[#1E1932] sm:w-[50%] flex flex-col gap-6 p-6 rounded-xl">
         <p
-          className={` text-sm sm:text-[20px] text-[#D1D1D1] ${
+          className={` text-sm sm:text-[20px] text-[#191932] dark:text-[#D1D1D1] ${
             isComparing ? "text-3xl font-bold" : ""
           }`}
         >

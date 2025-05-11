@@ -20,7 +20,7 @@ const IntervalSelector = ({
     router.push(`?${params.toString()}`, { scroll: false });
   }
   return (
-    <div className="flex gap-2 bg-[#232336] sm:w-[28rem] rounded-sm mt-4 sm:mt-12 justify-evenly">
+    <div className="flex gap-2 border bg-[#a7a7d0] dark:border-none dark:bg-[#232336] sm:w-[28rem] rounded-sm mt-4 sm:mt-12 justify-evenly">
       <div
         onClick={handleClick}
         id="1"

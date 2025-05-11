@@ -49,7 +49,7 @@ const CoinCarousel = () => {
     <div>
       <Carousel className="mt-20">
         <div className="flex justify-between">
-          <p className="self-center text-xs text-[#E8E8E8]">
+          <p className="self-center text-xs text-black dark:text-[#E8E8E8]">
             Select the currency to view statistics
           </p>
           <CompareButton />
@@ -122,10 +122,10 @@ export const CoinCard = ({
   return (
     <CarouselItem
       onClick={() => handleClick(coin.id)}
-      className={`basis-[30%] flex gap-2 rounded-lg py-2 px-[10px] bg-[#181825]
+      className={`basis-[30%] flex gap-2 rounded-lg py-2 px-[10px]  dark:bg-[#181825] dark:border-none
         ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
         
-        md:flex md:gap-4 md:py-4 md:px-8 sm:basis-[40%] lg:basis-1/5 md:rounded-md bg-[#191925]
+        md:flex md:gap-4 md:py-4 md:px-8 sm:basis-[40%] lg:basis-1/5 md:rounded-md bg-[#FFFFFF] border
         ${selectedCoin?.id === coin.id ? "bg-[#6161D680]" : ""}
         ${
           isComparing && selectedCoins[1]?.id === coin.id

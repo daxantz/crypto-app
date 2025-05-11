@@ -30,7 +30,7 @@ const Navbar = () => {
         <div className="flex gap-2">
           <SearchInput />
 
-          <div className="bg-[#191925] py-3 px-4 rounded-md flex">
+          <div className="bg-[#CCCCFA66] dark:bg-[#191925] py-3 px-4 rounded-md flex gap-2">
             <Image
               className="hidden sm:block"
               src={currency}

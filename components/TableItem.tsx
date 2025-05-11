@@ -53,7 +53,7 @@ const TableItem = ({
   };
 
   return (
-    <tr className="flex  items-center gap-5  justify-around bg-[#191925] rounded-xl p-5">
+    <tr className="flex  items-center gap-5  justify-around bg-white border-2 dark:border-none dark:bg-[#191925] rounded-xl p-5">
       <td className="hidden sm:table-cell">{index + 1}</td>
 
       <td>

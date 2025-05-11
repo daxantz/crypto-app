@@ -22,7 +22,7 @@ const CompareButton = () => {
   return (
     <button
       onClick={toggleComparisonMode}
-      className="bg-[#232336] py-[8px] px-2 sm:py-3 sm:px-6 rounded-md flex gap-2"
+      className="dark:bg-[#232336] py-[8px] px-2 sm:py-3 sm:px-6 rounded-md flex gap-2"
     >
       {" "}
       {isComparing && (
@@ -31,7 +31,9 @@ const CompareButton = () => {
         </span>
       )}
       <Image
-        className={`${isComparing && "hidden"} w-[13px] h-[13px] sm:size-auto`}
+        className={`${
+          isComparing && "hidden"
+        } w-[13px] h-[13px] sm:size-auto bg-black `}
         src={comparsion}
         alt="comparison icon"
       />{" "}

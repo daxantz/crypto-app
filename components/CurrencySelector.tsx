@@ -25,7 +25,7 @@ const CurrencySelector = () => {
   };
   return (
     <select
-      className="dark:bg-[#191925]"
+      className="bg-[#CCCCFA66] dark:bg-[#191925]"
       name="currencies"
       id="currencies"
       onChange={handleChange}
