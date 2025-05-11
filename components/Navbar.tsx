@@ -3,17 +3,15 @@ import Link from "next/link";
 import logo from "@/public/images/Logo.png";
 import home from "@/public/icons/home-2.png";
 import portfolio from "@/public/icons/portfolio.png";
-
 import currency from "@/public/icons/currency.png";
-
 import { ModeToggle } from "./ModeToggle";
 import SearchInput from "./SearchInput";
 import CurrencySelector from "./CurrencySelector";
-import SearchButton from "./SearchButton";
+
 const Navbar = () => {
   return (
     <nav className="flex justify-between py-2 px-4">
-      <div className="self-center sm:flex sm:gap-4">
+      <div className="self-center hidden sm:flex sm:gap-4">
         <Image src={logo} alt="logo" className="w-8 h-5 self-center" />
         <span className="hidden sm:block sm:text-xl">Logoipsm</span>
       </div>
@@ -31,9 +29,13 @@ const Navbar = () => {
       <div>
         <div className="flex gap-2">
           <SearchInput />
-          <SearchButton />
-          <div className="bg-[#191925] py-3 px-4 rounded-md">
-            <Image className="hidden" src={currency} alt="dollar-sign" />
+
+          <div className="bg-[#191925] py-3 px-4 rounded-md flex">
+            <Image
+              className="hidden sm:block"
+              src={currency}
+              alt="dollar-sign"
+            />
             <CurrencySelector />
           </div>
 

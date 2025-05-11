@@ -1,51 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import search from "@/public/icons/search.png";
-import { useGetAllCurrenciesQuery } from "@/lib/cryptoApi";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { debounce } from "lodash";
-import { useEffect } from "react";
+
+import { useDebouncedSearchParams } from "@/lib/hooks/useDebounceSearch";
 
 const SearchInput = () => {
-  const searchParams = useSearchParams();
   const [searchValue, setSearchValue] = useState("");
-
-  const { data, isLoading } = useGetAllCurrenciesQuery(
-    searchParams.get("search") || ""
-  );
-
-  const router = useRouter();
-
-  const searchDebounce = useMemo(
-    () =>
-      debounce((query: string) => {
-        // use the latest input value here
-        const params = new URLSearchParams(searchParams); // clone
-
-        if (searchValue) {
-          params.set("search", query);
-        } else {
-          params.delete("search");
-        }
-        router.replace(`?${params.toString()}`);
-      }, 500),
-    [router, searchParams, searchValue]
-  );
-  useEffect(() => {
-    searchDebounce(searchValue);
-  }, [searchValue, searchDebounce]);
+  const { data, isLoading } = useDebouncedSearchParams(searchValue);
 
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <form className="hidden sm:block">
+    <form>
       <div className="flex justify-center items-center relative rounded-md ">
         <Image
-          className="object-contain absolute left-3 top-3.5"
+          className="object-contain absolute left-3 top-3.5 hidden sm:block"
           src={search}
           alt="search-icon"
           width={20}
@@ -53,7 +26,7 @@ const SearchInput = () => {
         />
       </div>
       <input
-        className="bg-[#CCCCFA66] dark:bg-[#191925] px-12 py-2 w-[22.25rem] h-12 rounded-md "
+        className="bg-[#CCCCFA66] dark:bg-[#191925] px-2 sm:px-12 sm:py-2  h-12 rounded-md "
         type="search"
         placeholder="Search..."
         onChange={(e) => {
