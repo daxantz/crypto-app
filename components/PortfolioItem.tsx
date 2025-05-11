@@ -22,8 +22,8 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
   const hrChangePercentage = foundCoin?.price_change_percentage_24h;
 
   return (
-    <div className="flex flex-col sm:flex-row rounded-lg">
-      <div className="bg-[#191932] sm:w-[23.7rem] py-6 px-4 flex flex-col gap-8 rounded-l-lg">
+    <div className="flex flex-col sm:flex-row rounded-lg border-2 dark:border-none">
+      <div className="dark:bg-[#191932] sm:w-[23.7rem] py-6 px-4 flex flex-col gap-8 rounded-l-lg">
         <div className="flex gap-2 justify-between sm:justify-start">
           <Image
             className="order-2"
@@ -62,7 +62,7 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
         </div>
       </div>
       <div
-        className="bg-[#2D2D51] max-w-full grid grid-cols-2 
+        className="bg-[#7878be] dark:bg-[#2D2D51] max-w-full grid grid-cols-2 
    sm:flex-1 py-6 px-4 gap-5 sm:rounded-r-xl"
       >
         <div className=" border border-[#191932] rounded-lg px-2 py-3 ">

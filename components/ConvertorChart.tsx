@@ -110,7 +110,7 @@ const ConvertorChart = ({ coin1, coin2 }: convertorChartProps) => {
     return <p>{error.error}</p>;
   }
   return (
-    <div className="bg-[#191932] flex flex-col gap-6 p-6    mt-10 rounded-xl ">
+    <div className="bg-white dark:bg-[#191932] flex flex-col gap-6 p-6    mt-10 rounded-xl ">
       <p className="text-xl">
         <span>
           {coin1.name} ({coin1.symbol})

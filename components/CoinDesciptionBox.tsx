@@ -8,7 +8,7 @@ const CoinDesciptionBox = ({ coin }: { coin: CoinDetails | undefined }) => {
   const splicedWords = coin?.description?.en.slice(0, 884);
 
   return (
-    <div className="bg-[#1E1932] sm:bg-transparent">
+    <div className=" dark:bg-[#1E1932] sm:bg-transparent">
       <h2 className="font-medium text-xl mb-5">Description</h2>
       <div>
         <p className="text-sm font-normal">

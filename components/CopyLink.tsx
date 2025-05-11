@@ -20,7 +20,7 @@ const CopyLink = ({ url }: { url: string | undefined }) => {
   }
   if (!url) return <p>URL not found</p>;
   return (
-    <div className="bg-[#1E1932] py-4 px-6 rounded-lg flex gap-4 items-center justify-center font-medium">
+    <div className="bg-[#6161d680] dark:bg-[#1E1932] text-white py-4 px-6 rounded-lg flex gap-4 items-center justify-center font-medium">
       <Link className="flex gap-4" href={url} target="_blank">
         <LinkImage width={20} height={20} />
         <span>{url}</span>
