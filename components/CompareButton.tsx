@@ -6,13 +6,14 @@ import comparsion from "@/public/icons/comparison.svg";
 import { setIsComparing, setSelectedCoins } from "@/lib/coinSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
-
+import { useTheme } from "next-themes";
+import lightComparison from "@/public/icons/lightComparison.svg";
 const CompareButton = () => {
   const disptach = useDispatch();
   const isComparing = useSelector(
     (state: RootState) => state.coins.isComparing
   );
-
+  const { theme } = useTheme();
   function toggleComparisonMode() {
     if (isComparing) {
       disptach(setSelectedCoins(null));
@@ -31,10 +32,8 @@ const CompareButton = () => {
         </span>
       )}
       <Image
-        className={`${
-          isComparing && "hidden"
-        } w-[13px] h-[13px] sm:size-auto bg-black `}
-        src={comparsion}
+        className={`${isComparing && "hidden"} w-[13px] h-[13px] sm:size-auto `}
+        src={theme === "dark" ? comparsion : lightComparison}
         alt="comparison icon"
       />{" "}
       <span
