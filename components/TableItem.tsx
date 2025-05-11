@@ -55,14 +55,16 @@ const TableItem = ({
   return (
     <tr className="flex  items-center gap-5  justify-around bg-[#191925] rounded-xl p-5">
       <td className="hidden sm:table-cell">{index + 1}</td>
-      <Link href={coin.id}>
-        <td className="flex gap-2 items-center">
+
+      <td>
+        <Link className="flex gap-2 items-center" href={coin.id}>
           <Image width={32} height={32} src={coin.image} alt="" />
 
           <span className="hidden sm:inline">{coin.name}</span>
           <span>({coin.symbol.toUpperCase()})</span>
-        </td>
-      </Link>
+        </Link>
+      </td>
+
       <td className="">${Humanize.formatNumber(coin.current_price, 0)}</td>
       <td
         className={` ${

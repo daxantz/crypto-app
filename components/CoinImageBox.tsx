@@ -25,7 +25,7 @@ const CoinImageBox = ({
       </div>
     );
   return (
-    <div className="bg-[#1E1932] rounded-xl py-10 px-14  flex flex-col items-center justify-center h-[265px]  gap-6">
+    <div className="bg-[#1E1932] rounded-xl sm:py-10 sm:px-14  flex flex-col items-center justify-center h-[265px]  gap-6">
       <div className="bg-[#2C2C4A] rounded-md p-4 text-center w-16 h-16 ">
         <Image src={image} alt="coin logo" width={32} height={32} />
       </div>

@@ -153,7 +153,7 @@ export const CoinCard = ({
       />
       <div>
         <p>
-          <p className="hidden sm:inline">{coin.name}</p>{" "}
+          <span className="hidden sm:inline">{coin.name}</span>{" "}
           <span className="hidden sm:inline">
             ({coin.symbol.toUpperCase()})
           </span>

@@ -29,10 +29,10 @@ const CoinDetails = async ({ params }: { params: { coinId: string } }) => {
           Portfolio / Your <span>{coin?.name}</span> summary
         </p>
       </div>
-      <div className="flex h-full gap-10  ">
-        <div className="flex flex-col  w-[60%] justify-between">
-          <div className="flex gap-8   ">
-            <div className="w-[19.06rem] h-[333px] flex flex-col justify-between ">
+      <div className="flex flex-col md:flex-row h-full gap-2 sm:gap-10  ">
+        <div className="flex flex-col  sm:w-[60%] justify-between">
+          <div className="flex flex-col sm:flex-row gap-2  sm:gap-8   ">
+            <div className="w-full sm:w-[19.06rem] sm:h-[333px] flex flex-col justify-between ">
               <div className="h-[75%]">
                 <CoinImageBox
                   image={coin?.image?.large}
@@ -40,17 +40,18 @@ const CoinDetails = async ({ params }: { params: { coinId: string } }) => {
                   symbol={coin?.symbol}
                 />{" "}
               </div>
-
-              <CopyLink url={orgLink} />
+              <div className="hidden sm:block">
+                <CopyLink url={orgLink} />
+              </div>
             </div>
 
             <CoinPriceCard coin={coin} />
           </div>
           <CoinDesciptionBox coin={coin} />
         </div>
-        <div className="flex flex-1 flex-col justify-between h-full gap-16  ">
+        <div className="flex flex-1 flex-col justify-between h-full gap-2 sm:gap-16  ">
           <MarketDataCard coin={coin} />
-          <div className="flex flex-col gap-6 ">
+          <div className="flex flex-col gap-2 sm:gap-6 ">
             {coin && (
               <>
                 <CopyLink url={blockchainLink} />

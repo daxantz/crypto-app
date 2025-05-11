@@ -15,7 +15,7 @@ const CoinPriceCard = ({ coin }: CardProps) => {
     (state: RootState) => state.currency.currency
   );
   return (
-    <div className="bg-[#1E1932] py-10 px-14 flex flex-col gap-6 rounded-xl w-[22.18rem] h-[333px]">
+    <div className="bg-[#1E1932] py-10 px-14 flex flex-col gap-6 rounded-xl sm:w-[22.18rem] h-[333px]">
       <p className="font-bold text-4xl">
         $
         {Humanize.formatNumber(
