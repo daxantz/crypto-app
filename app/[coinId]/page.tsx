@@ -7,8 +7,14 @@ import CoinDesciptionBox from "@/components/CoinDesciptionBox";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { CoinDetails } from "@/lib/types/coinDetails";
-const CoinDetails = async ({ params }: { params: { coinId: string } }) => {
-  const searchParams = await params;
+
+interface PageProps {
+  params: {
+    coinId: string;
+  };
+}
+const CoinDetails = async ({ params }: PageProps) => {
+  const searchParams = params;
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_CRYPTO_URL}coins/${searchParams.coinId}`,
     { method: "GET", next: { revalidate: 3600 }, cache: "force-cache" }
