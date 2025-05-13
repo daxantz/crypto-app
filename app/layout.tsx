@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import MarketData from "@/components/MarketData";
 
 import StoreProvider from "@/components/StoreProvider";
+import MobileMenu from "@/components/MobileMenu";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,17 +23,23 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StoreProvider>
-          <MarketData />
-
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
+            <div className="flex flex-col sm:order-1 gap-3">
+              <div className="order-2">
+                <MarketData />
+              </div>
+              <div className="order-1 sm:order-2">
+                <Navbar />
+              </div>
+            </div>
 
             <main className="max-w-[1790px] mx-auto mt-12 ">{children}</main>
+            <MobileMenu />
           </ThemeProvider>
         </StoreProvider>
       </body>

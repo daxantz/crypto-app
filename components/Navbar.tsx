@@ -1,42 +1,54 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/images/Logo.png";
 import home from "@/public/icons/home-2.png";
+import Home from "@/public/icons/Home.svg";
 import portfolio from "@/public/icons/portfolio.png";
-
 import currency from "@/public/icons/currency.png";
-
+import Layers from "@/public/icons/Layers.svg";
 import { ModeToggle } from "./ModeToggle";
 import SearchInput from "./SearchInput";
 import CurrencySelector from "./CurrencySelector";
+
+import { useTheme } from "next-themes";
+
 const Navbar = () => {
+  const { theme } = useTheme();
   return (
-    <nav className="flex justify-between  px-[72px] py-4">
-      <div className="flex justify-center items-center gap-2">
-        <Image src={logo} alt="logo" />
-        <span>Logoipsm</span>
+    <nav className="flex justify-between py-2 px-4">
+      <div className="self-center hidden sm:flex sm:gap-4">
+        <Image src={logo} alt="logo" className="w-8 h-5 self-center" />
+        <span className="hidden sm:block sm:text-xl">Logoipsm</span>
       </div>
-      <div className="flex gap-6">
-        <div className="flex gap-2 justify-center items-center">
-          <Image src={home} alt="home-icon" />
+      <div className="hidden lg:flex items-center gap-6">
+        <div className=" flex gap-[10px]">
+          <Image src={theme === "dark" ? home : Home} alt="home-icon" />
 
           <Link href={"/"}>Home</Link>
         </div>
 
-        <div className="flex gap-2 justify-center items-center">
-          <Image src={portfolio} alt="home-icon" />
+        <div className="flex gap-[10px]">
+          <Image src={theme === "dark" ? portfolio : Layers} alt="home-icon" />
           <Link href={"/portfolio"}>Portfolio</Link>
         </div>
       </div>
-      <div className=" flex gap-6 flex-shrink-0 relative ">
-        <SearchInput />
+      <div>
+        <div className="flex gap-2">
+          <SearchInput />
 
-        <div className="flex py-3 px-4 bg-[#CCCCFA66] dark:bg-[#191925] gap-2 justify-center items-center rounded-md">
-          <Image src={currency} alt="dollar-sign" />
-          <CurrencySelector />
+          <div className="bg-[#CCCCFA66] dark:bg-[#191925] py-3 px-4 rounded-md flex gap-2">
+            <Image
+              className="hidden sm:block"
+              src={currency}
+              alt="dollar-sign"
+            />
+            <CurrencySelector />
+          </div>
+
+          <ModeToggle />
         </div>
-
-        <ModeToggle />
       </div>
     </nav>
   );

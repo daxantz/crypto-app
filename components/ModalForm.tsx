@@ -82,8 +82,8 @@ const ModalForm = ({
     }
   }
   return (
-    <form className="grid gap-4 py-4   w-[461px]">
-      <div className="grid grid-cols-4 items-center gap-4 w-[420px]">
+    <form className="grid gap-4 py-4   md:w-[28.81rem]">
+      <div className="grid grid-cols-4 items-center gap-4 ">
         <CoinSelect setSelectedCoin={setSelectedCoin} />
       </div>
       <div className="w-full">
@@ -117,10 +117,10 @@ const ModalForm = ({
           required
         />
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         <DialogTrigger
           onClick={clearSelectedCoin}
-          className="rounded-lg  bg-[#232336] flex-1 py-3 px-4"
+          className="rounded-lg  bg-[#232336] flex-1 py-3 px-4 order-2"
         >
           <button>Cancel</button>
         </DialogTrigger>
