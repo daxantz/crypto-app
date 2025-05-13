@@ -13,7 +13,7 @@ const PageSelector = () => {
     { href: "/", label: "Coins" },
     { href: "/convertor", label: "Convertor" },
   ];
-
+  if (!theme) return null;
   return (
     <div className="hidden sm:block">
       {buttons.map(({ href, label }) => {
