@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -56,13 +56,14 @@ const CoinCarousel = () => {
         </div>
         <CarouselContent className="flex gap-4 p-4 ">
           {data?.map((coin) => (
-            <CoinCard
-              coin={coin}
-              data={data}
-              selectedCurrency={selectedCurrency}
-              isLoading={isLoading}
-              key={coin.id}
-            />
+            <Suspense key={coin.id} fallback={<p>loading card...</p>}>
+              <CoinCard
+                coin={coin}
+                data={data}
+                selectedCurrency={selectedCurrency}
+                isLoading={isLoading}
+              />
+            </Suspense>
           ))}
         </CarouselContent>
         <CarouselPrevious className="hidden md:inline-flex" />
