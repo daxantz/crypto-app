@@ -9,11 +9,12 @@ import Link from "next/link";
 import type { CoinDetails } from "@/lib/types/coinDetails";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     coinId: string;
-  };
+  }>;
 }
-const CoinDetails = async ({ params }: PageProps) => {
+const CoinDetails = async (props: PageProps) => {
+  const params = await props.params;
   const searchParams = params;
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_CRYPTO_URL}coins/${searchParams.coinId}`,
