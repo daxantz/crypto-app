@@ -11,11 +11,7 @@ import { useGetCoinsByIdsQuery } from "@/lib/cryptoApi";
 
 const PortfolioContainer = () => {
   const portfolio = useSelector((state: RootState) => state.portfolio);
-  const [savedPortfolio, setSavedPortfolio] = useState(() => {
-    const localPortfolio = localStorage.getItem("portfolio");
-
-    return localPortfolio ? JSON.parse(localPortfolio) : portfolio;
-  });
+  const [savedPortfolio, setSavedPortfolio] = useState(portfolio);
   const currency = useSelector((state: RootState) => state.currency.currency);
   const coinIds = savedPortfolio.coins.map((coin: coin) => coin.id);
   const idString = coinIds.join(",");
