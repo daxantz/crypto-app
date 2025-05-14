@@ -10,7 +10,7 @@ import { rate } from "./types/rate";
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    baseUrl: "",
   }),
   endpoints: (build) => ({
     getMarketData: build.query<marketData, void>({
