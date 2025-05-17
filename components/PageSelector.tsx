@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { Skeleton } from "./ui/skeleton";
 
 const PageSelector = () => {
   const pathName = usePathname();
@@ -13,7 +14,7 @@ const PageSelector = () => {
     { href: "/", label: "Coins" },
     { href: "/convertor", label: "Convertor" },
   ];
-  if (!theme) return null;
+  if (!theme) return <Skeleton className="w-[30rem] rounded-md h-[48px] " />;
   return (
     <div className="hidden sm:block">
       {buttons.map(({ href, label }) => {
