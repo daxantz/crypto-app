@@ -17,6 +17,8 @@ import {
   Legend,
 } from "chart.js";
 import Link from "next/link";
+import { TableRow, TableCell } from "@/components/ui/table";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -53,25 +55,27 @@ const TableItem = ({
   };
 
   return (
-    <tr className="flex  items-center gap-5  justify-around bg-white border-2 dark:border-none dark:bg-[#191925] rounded-xl p-5">
-      <td className="hidden sm:table-cell">{index + 1}</td>
+    <TableRow className=" sm:table-row items-center gap-4 sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-4 py-6">
+      <TableCell className="hidden sm:table-cell font-medium rounded-s-xl">
+        {index + 1}
+      </TableCell>
 
-      <td>
-        <Link className="flex gap-2 items-center" href={coin.id}>
-          <Image width={32} height={32} src={coin.image} alt="" />
-
+      <TableCell className="w-[100px]">
+        <Link className="flex items-center gap-2" href={coin.id}>
+          <Image width={32} height={32} src={coin.image} alt={coin.name} />
           <span className="hidden sm:inline">{coin.name}</span>
-          <span>({coin.symbol.toUpperCase()})</span>
+          <span className="ml-1">({coin.symbol.toUpperCase()})</span>
         </Link>
-      </td>
+      </TableCell>
 
-      <td className="">${Humanize.formatNumber(coin.current_price, 0)}</td>
-      <td
-        className={` ${
+      <TableCell>${Humanize.formatNumber(coin.current_price, 0)}</TableCell>
+
+      <TableCell
+        className={
           coin.price_change_percentage_1h_in_currency < 0
             ? "text-[#FE2264]"
             : "text-[#01F1E3]"
-        }`}
+        }
       >
         {Math.abs(
           Number(
@@ -79,13 +83,14 @@ const TableItem = ({
           )
         )}
         %
-      </td>
-      <td
-        className={` ${
+      </TableCell>
+
+      <TableCell
+        className={
           coin.price_change_percentage_24h_in_currency < 0
             ? "text-[#FE2264]"
             : "text-[#01F1E3]"
-        }`}
+        }
       >
         {Math.abs(
           Number(
@@ -93,8 +98,9 @@ const TableItem = ({
           )
         )}
         %
-      </td>
-      <td
+      </TableCell>
+
+      <TableCell
         className={`hidden sm:table-cell ${
           coin.price_change_percentage_7d_in_currency < 0
             ? "text-[#FE2264]"
@@ -107,26 +113,30 @@ const TableItem = ({
           )
         )}
         %
-      </td>
-      <td className="hidden sm:flex gap-8 w-[470px] ">
+      </TableCell>
+
+      <TableCell className="hidden sm:table-cell w-[14rem]">
         <progress
-          className="[&::-webkit-progress-bar]:rounded-sm [&::-webkit-progress-value]:rounded-sm [&::-webkit-progress-value]:bg-blue-400 h-2 w-[50%]"
+          className="h-2 w-full rounded-sm [&::-webkit-progress-value]:bg-blue-400"
           value={coin.market_cap_change_24h}
           max={coin.market_cap}
         />
+      </TableCell>
+
+      <TableCell className="hidden sm:table-cell w-[14rem]">
         <progress
-          className="[&::-webkit-progress-bar]:rounded-sm [&::-webkit-progress-value]:rounded-sm [&::-webkit-progress-value]:bg-blue-400 h-2 w-[50%]"
+          className="h-2 w-full rounded-sm [&::-webkit-progress-value]:bg-blue-400"
           value={coin.circulating_supply}
           max={coin.total_supply}
         />
-      </td>
+      </TableCell>
 
-      <td className="hidden sm:table-cell">
+      <TableCell className="hidden sm:table-cell rounded-e-xl">
         <div className="w-[9.37rem]">
           <Line data={data} options={options} />
         </div>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 };
 
