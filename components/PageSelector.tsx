@@ -5,16 +5,25 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Skeleton } from "./ui/skeleton";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const PageSelector = () => {
   const pathName = usePathname();
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   const buttons = [
     { href: "/", label: "Coins" },
     { href: "/convertor", label: "Convertor" },
   ];
-  if (!theme) return <Skeleton className="w-[30rem] rounded-md h-[48px] " />;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) {
+    return <Skeleton className="w-[30rem] rounded-md h-[48px]" />;
+  }
+
   return (
     <div className="hidden sm:block">
       {buttons.map(({ href, label }) => {

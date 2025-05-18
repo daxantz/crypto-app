@@ -1,4 +1,5 @@
 import ConvertorContainer from "@/components/ConvertorContainer";
+import CurrentTime from "@/components/CurrentTime";
 import PageSelector from "@/components/PageSelector";
 
 const page = async () => {
@@ -12,17 +13,12 @@ const page = async () => {
   );
   const data = await res.json();
 
-  const date = new Date();
-  const dateString = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
-  const time = date.toLocaleTimeString();
   return (
     <div className="flex flex-col gap-10">
       <PageSelector />
       <div>
         <h2 className="text-xl font-medium">Online currency convertor</h2>
-        <p className="text-[#9E9E9E] text-sm font-normal">
-          {dateString} {time}
-        </p>
+        <CurrentTime />
         <ConvertorContainer data={data} />
       </div>
     </div>

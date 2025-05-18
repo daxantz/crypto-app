@@ -1,8 +1,17 @@
 "use client";
+
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import TableItem from "./TableItem";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
 
 export type CoinMarketData = {
   id: string;
@@ -47,6 +56,7 @@ const CoinTable = () => {
   const [coins, setCoins] = useState<CoinMarketData[]>([]);
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>("");
+
   function fetchData() {
     async function fetchCoins() {
       try {
@@ -54,15 +64,16 @@ const CoinTable = () => {
           `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=${page.toString()}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
         );
         const data = await res.json();
-        setCoins((coins) => [...coins, ...data]);
+        setCoins((prev) => [...prev, ...data]);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
         }
       }
     }
+
     fetchCoins();
-    setPage((page) => page + 1);
+    setPage((prev) => prev + 1);
   }
 
   return (
@@ -71,42 +82,44 @@ const CoinTable = () => {
       dataLength={coins.length}
       next={fetchData}
       hasMore={true}
-      loader={<Skeleton className="h-[500px]" />}
+      loader={<Skeleton className="h-[500px] w-full" />}
       endMessage={
-        <p>
-          {" "}
+        <p className="text-center text-muted-foreground mt-4">
           <b>Yay! You have seen it all</b>
         </p>
       }
     >
-      <table className=" w-full border-collapse">
-        <thead>
-          <tr className="flex gap-5 sm:justify-around py-4 px-5 ">
-            <th className="hidden sm:table-cell">#</th>
-            <th className="hidden sm:table-cell">Name</th>
-            <th className="hidden sm:table-cell">Price</th>
-            <th className="hidden sm:table-cell">1h%</th>
-            <th className="hidden sm:table-cell">24h%</th>
-            <th className="hidden sm:table-cell">7d%</th>
-            <th className="hidden sm:table-cell">24h volume / Market Cap</th>
-            <th className="hidden sm:table-cell">Circulating / Total supply</th>
-            <th className="hidden sm:table-cell">Last 7d</th>
-          </tr>
-        </thead>
+      <Table className="border-separate border-spacing-y-4">
+        <TableHeader>
+          <TableRow className="hidden sm:table-row">
+            <TableHead className="w-1/9">#</TableHead>
+            <TableHead className="w-1/9">Name</TableHead>
+            <TableHead className="w-1/9">Price</TableHead>
+            <TableHead className="w-1/9">1h%</TableHead>
+            <TableHead className="w-1/9">24h%</TableHead>
+            <TableHead className="w-1/9">7d%</TableHead>
+            <TableHead>24h Vol / MCap</TableHead>
+            <TableHead className="w-1/9">Supply</TableHead>
+            <TableHead className="w-1/9">Last 7d</TableHead>
+          </TableRow>
+        </TableHeader>
 
-        <tbody className="flex flex-col gap-1 sm:gap-2">
+        <TableBody>
           {coins.map((coin, index) => (
-            <TableItem coin={coin} key={coin.id} index={index} />
+            <TableItem key={coin.id} coin={coin} index={index} />
           ))}
-        </tbody>
-        <tfoot>
-          {error !== null && (
-            <tr>
-              <td>{error}</td>
-            </tr>
-          )}
-        </tfoot>
-      </table>
+        </TableBody>
+
+        {error && (
+          <tfoot>
+            <TableRow>
+              <TableCell colSpan={9} className="text-red-500 text-center">
+                {error}
+              </TableCell>
+            </TableRow>
+          </tfoot>
+        )}
+      </Table>
     </InfiniteScroll>
   );
 };
