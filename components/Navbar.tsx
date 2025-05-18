@@ -14,9 +14,18 @@ import CurrencySelector from "./CurrencySelector";
 
 import { useTheme } from "next-themes";
 import { Suspense } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Navbar = () => {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
   return (
     <Suspense fallback={<p>loading nav bar</p>}>
       <nav className="flex justify-between py-2 px-4">
