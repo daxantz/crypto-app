@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import TableItem from "./TableItem";
+import { Skeleton } from "./ui/skeleton";
 
 export type CoinMarketData = {
   id: string;
@@ -70,7 +71,7 @@ const CoinTable = () => {
       dataLength={coins.length}
       next={fetchData}
       hasMore={true}
-      loader={<p> Loading...</p>}
+      loader={<Skeleton className="h-[500px]" />}
       endMessage={
         <p>
           {" "}

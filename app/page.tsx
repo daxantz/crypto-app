@@ -10,8 +10,6 @@ export default function Home() {
       <div className="mt-10">
         <CoinTable />
       </div>
-
-      <p>coins</p>
     </div>
   );
 }
