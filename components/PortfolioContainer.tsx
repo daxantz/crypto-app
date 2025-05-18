@@ -35,6 +35,7 @@ const PortfolioContainer = () => {
         </p>
       </div>
     );
+
   return (
     <div className="mt-10 flex flex-col gap-6">
       {savedPortfolio.coins.map((coin: coin) => (

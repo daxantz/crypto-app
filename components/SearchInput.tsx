@@ -7,12 +7,13 @@ import search from "@/public/icons/search.png";
 import Link from "next/link";
 
 import { useDebouncedSearchParams } from "@/lib/hooks/useDebounceSearch";
+import { Skeleton } from "./ui/skeleton";
 
 const SearchInput = () => {
   const [searchValue, setSearchValue] = useState("");
   const { data, isLoading } = useDebouncedSearchParams(searchValue);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Skeleton className="rounded-md w-[262px]" />;
 
   return (
     <form>

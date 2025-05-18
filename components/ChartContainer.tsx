@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 import Charts from "@/components/Charts";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import ChartSkeleton from "./ChartSkeleton";
 
 const ChartContainer = ({ days }: { days: string }) => {
   const selectedCurrency = useSelector(
@@ -62,6 +63,8 @@ const ChartContainer = ({ days }: { days: string }) => {
       return <p>{String(err.status)}</p>; // convert status to string just in case
     }
   }
+
+  if (isCoinDataLoading) return <ChartSkeleton />;
 
   return (
     <div className="flex gap-8">

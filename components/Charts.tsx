@@ -37,7 +37,7 @@ type ChartsProps = {
   error: FetchBaseQueryError | SerializedError | undefined;
   coinData2: chartCoin | undefined;
 };
-const Charts = ({ coinData, isLoading, coinData2 }: ChartsProps) => {
+const Charts = ({ coinData, coinData2 }: ChartsProps) => {
   const selectedCoin = useSelector(
     (state: RootState) => state.coins.selectedCoin
   );
@@ -73,7 +73,7 @@ const Charts = ({ coinData, isLoading, coinData2 }: ChartsProps) => {
     "MMM d, yyyy"
   );
 
-  if (isLoading || !coinData?.prices?.length) return <p>Loading...</p>;
+  // if (isLoading || !coinData?.prices?.length) return <p>Loading...</p>;
 
   const data = {
     labels,

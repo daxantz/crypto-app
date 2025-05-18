@@ -8,12 +8,13 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@/lib/store";
 import { useGetExhangeRatesQuery } from "@/lib/cryptoApi";
+import { Skeleton } from "./ui/skeleton";
 
 const ConvertorContainer = ({ data }: { data: searchCoins[] }) => {
   const [convertQuantity, setConvertQuantity] = useState(0);
   const coin1 = useSelector((state: RootState) => state.convertor.coin1);
   const coin2 = useSelector((state: RootState) => state.convertor.coin2);
-  const { data: exchangeRate } = useGetExhangeRatesQuery({
+  const { data: exchangeRate, isLoading } = useGetExhangeRatesQuery({
     currency1: coin1.id,
     currency2: coin2.id,
   });
@@ -22,7 +23,18 @@ const ConvertorContainer = ({ data }: { data: searchCoins[] }) => {
   const btcToCoin2 =
     convertQuantity / (exchangeRate ? exchangeRate?.[coin2?.id]?.["btc"] : 0);
   const finalPrice = coin1ToBtc != undefined ? coin1ToBtc * btcToCoin2 : 0;
+  if (isLoading)
+    return (
+      <div className="bg-white dark:bg-[#191932] flex flex-col gap-6 p-6 mt-10 rounded-xl">
+        {/* Title Skeleton */}
+        <Skeleton className="h-6 sm:h-8 w-[60%]" />
 
+        {/* Chart Area Skeleton */}
+        <div className="h-[250px] sm:h-[500px] flex">
+          <Skeleton className="w-full rounded-md" />
+        </div>
+      </div>
+    );
   return (
     <div className="mt-6">
       <div className="flex flex-col sm:flex-row sm:flex-1 gap-6">

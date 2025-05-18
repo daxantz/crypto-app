@@ -10,11 +10,12 @@ import eth from "@/public/icons/eth-icon.svg";
 import Humanize from "humanize-plus";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
+import MarketDataSkeleton from "./MarketDataSkeleton";
 const MarketData = () => {
   const { data, isLoading } = useGetMarketDataQuery();
   const currency = useSelector((state: RootState) => state.currency.currency);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <MarketDataSkeleton />;
 
   return (
     <div className="flex gap-8 bg-[#353570] text-white p-4 justify-center text-xs items-center border-y border-[#FFFFFF1A]">

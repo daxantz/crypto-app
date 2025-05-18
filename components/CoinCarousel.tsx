@@ -21,6 +21,7 @@ import { searchCoins } from "@/lib/types/searchCoin";
 import { Currency } from "@/lib/currencySlice";
 import ChartContainer from "./ChartContainer";
 import { useRouter, useSearchParams } from "next/navigation";
+import CardSkeleton from "./CardSkeleton";
 const CoinCarousel = () => {
   const dispatch = useDispatch();
   const [days, setDays] = useState("30");
@@ -42,9 +43,7 @@ const CoinCarousel = () => {
       dispatch(setSelectedCoins(data[0]));
     }
   }, [data, selectedCoin, dispatch]);
-
-  if (isLoading) return "loading...";
-
+  if (isLoading) return <CardSkeleton />;
   return (
     <div>
       <Carousel className="mt-20">
@@ -56,7 +55,7 @@ const CoinCarousel = () => {
         </div>
         <CarouselContent className="flex gap-4 p-4 ">
           {data?.map((coin) => (
-            <Suspense key={coin.id} fallback={<p>loading card...</p>}>
+            <Suspense key={coin.id} fallback={<CardSkeleton />}>
               <CoinCard
                 coin={coin}
                 data={data}
