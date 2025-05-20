@@ -90,7 +90,7 @@ const CoinTable = () => {
       }
     >
       <Table className="border-separate border-spacing-y-4">
-        <TableHeader>
+        <TableHeader className="relative">
           <TableRow className="hidden sm:table-row">
             <TableHead className="w-1/9">#</TableHead>
             <TableHead className="w-1/9">Name</TableHead>
@@ -100,7 +100,7 @@ const CoinTable = () => {
             <TableHead className="w-1/9">7d%</TableHead>
             <TableHead>24h Vol / MCap</TableHead>
             <TableHead className="w-1/9">Supply</TableHead>
-            <TableHead className="w-1/9">Last 7d</TableHead>
+            <TableHead className="">Last 7d</TableHead>
           </TableRow>
         </TableHeader>
 
