@@ -83,7 +83,7 @@ const ModalForm = ({
   }
   return (
     <form className="grid gap-4 py-4   md:w-[28.81rem]">
-      <div className="grid grid-cols-4 items-center gap-4 ">
+      <div className="  max-w-full">
         <CoinSelect setSelectedCoin={setSelectedCoin} />
       </div>
       <div className="w-full">
@@ -109,7 +109,7 @@ const ModalForm = ({
       <div className="w-full">
         <input
           value={dateInput}
-          className="bg-[#191925] p-4 w-full rounded-sm"
+          className="bg-[#191925]  py-4 pl-4 pr-0 w-full rounded-sm"
           placeholder="Purchased Date"
           type="date"
           onChange={handleChange}

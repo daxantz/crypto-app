@@ -28,7 +28,7 @@ const Navbar = () => {
   if (!mounted) return null;
   return (
     <Suspense fallback={<p>loading nav bar</p>}>
-      <nav className="flex justify-between py-2 px-4">
+      <nav className="flex justify-between py-1  sm:mb-5">
         <div className="self-center hidden sm:flex sm:gap-4">
           <Image src={logo} alt="logo" className="w-8 h-5 self-center" />
           <span className="hidden sm:block sm:text-xl">Logoipsm</span>

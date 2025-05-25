@@ -33,12 +33,18 @@ export default function RootLayout({
               <div className="order-2">
                 <MarketData />
               </div>
-              <div className="order-1 sm:order-2">
+              <div className="sm:hidden order-1 sm:order-2">
                 <Navbar />
               </div>
             </div>
 
-            <main className="max-w-[1790px] mx-auto mt-12 ">{children}</main>
+            <main className="max-w-[1790px] mx-auto mt-12 ">
+              {" "}
+              <div className="hidden sm:block">
+                <Navbar />
+              </div>
+              {children}
+            </main>
             <MobileMenu />
           </ThemeProvider>
         </StoreProvider>

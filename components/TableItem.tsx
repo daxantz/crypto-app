@@ -55,7 +55,7 @@ const TableItem = ({
   };
 
   return (
-    <TableRow className=" sm:table-row items-center gap-4 sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-4 py-6">
+    <TableRow className=" sm:table-row  sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-4 py-6 dark:hover:bg-[#2A2A3B]/50">
       <TableCell className="hidden sm:table-cell font-medium rounded-s-xl">
         {index + 1}
       </TableCell>
@@ -115,7 +115,7 @@ const TableItem = ({
         %
       </TableCell>
 
-      <TableCell className="hidden sm:table-cell w-[14rem]">
+      <TableCell className="hidden sm:table-cell w-[20rem]">
         <progress
           className="h-2 w-full rounded-sm [&::-webkit-progress-value]:bg-blue-400"
           value={coin.market_cap_change_24h}
@@ -123,7 +123,7 @@ const TableItem = ({
         />
       </TableCell>
 
-      <TableCell className="hidden sm:table-cell w-[14rem]">
+      <TableCell className="hidden sm:table-cell w-[20rem] ">
         <progress
           className="h-2 w-full rounded-sm [&::-webkit-progress-value]:bg-blue-400"
           value={coin.circulating_supply}
@@ -131,8 +131,8 @@ const TableItem = ({
         />
       </TableCell>
 
-      <TableCell className="hidden sm:table-cell rounded-e-xl">
-        <div className="w-[9.37rem]">
+      <TableCell className="hidden sm:table-cell rounded-e-xl  w-32">
+        <div className="w-[9.37rem] ">
           <Line data={data} options={options} />
         </div>
       </TableCell>

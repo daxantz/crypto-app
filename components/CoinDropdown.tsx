@@ -8,7 +8,7 @@ const customStyles: StylesConfig = {
     ...provided,
     backgroundColor: "#191925",
     border: "none",
-    width: "420px",
+    width: "100%",
     padding: "8px",
   }),
   input: (provided) => ({
@@ -53,6 +53,11 @@ const customStyles: StylesConfig = {
     right: "-10px",
     top: "50%",
     width: "35px",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "white", // 🟢 Controls the selected text color
+    fontWeight: "500", // Optional: makes it bold
   }),
 };
 export type option = {

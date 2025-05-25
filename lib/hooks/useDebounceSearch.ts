@@ -8,9 +8,7 @@ export function useDebouncedSearchParams(
   delay: number = 500
 ) {
   const searchParams = useSearchParams();
-  const { data, isLoading } = useGetAllCurrenciesQuery(
-    searchParams.get("search") || ""
-  );
+  const { data, isLoading } = useGetAllCurrenciesQuery(searchValue || "");
   const router = useRouter();
 
   const debouncedSearch = useMemo(

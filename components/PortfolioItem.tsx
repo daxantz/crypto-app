@@ -45,7 +45,8 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
         <div className=" flex flex-col gap-2">
           <p className="hidden sm:block">Total Value</p>
           <p className="font-bold text-xl sm:text-3xl">
-            ${totalValue && totalValue.toFixed(2)} {currency.toUpperCase()}
+            ${totalValue && totalValue.toLocaleString()}{" "}
+            {currency.toUpperCase()}
             <span
               className={`text-base ${
                 athChangePercentage && athChangePercentage < 0
