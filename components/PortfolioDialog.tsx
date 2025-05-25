@@ -2,6 +2,7 @@
 import React from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -12,6 +13,7 @@ import CoinImageBox from "./CoinImageBox";
 import { useState } from "react";
 import ModalForm from "./ModalForm";
 import Image from "next/image";
+import { X } from "lucide-react";
 
 export type selectedCoin = {
   label?: string;
@@ -55,12 +57,22 @@ const PortfolioDialog = () => {
           />
         </button>
       </DialogTrigger>
-      <DialogContent className=" sm:max-w-[886px] p-12  ">
-        <DialogHeader className="mb-5">
-          <DialogTitle>Select Coins</DialogTitle>
-        </DialogHeader>
+      <DialogContent className=" sm:max-w-[886px] p-12 [&>button]:hidden ">
+        <div className="flex justify-between">
+          <DialogHeader className="mb-5 flex flex-col items-center">
+            <DialogTitle>Select Coins</DialogTitle>
+          </DialogHeader>
+          <DialogClose asChild>
+            <button
+              className=" flex flex-col text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              aria-label="Close"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </DialogClose>
+        </div>
         {error && <p className="text-red-500 text-end">{error}</p>}
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8 items-center">
           <div className="md:w-1/2">
             <CoinImageBox
               image={selectedCoin?.large}
