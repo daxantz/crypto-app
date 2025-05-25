@@ -40,7 +40,9 @@ export default function RootLayout({
 
             <main className="max-w-[1790px] mx-auto mt-12 ">
               {" "}
-              <Navbar />
+              <div className="hidden sm:block">
+                <Navbar />
+              </div>
               {children}
             </main>
             <MobileMenu />
