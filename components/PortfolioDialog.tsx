@@ -72,7 +72,7 @@ const PortfolioDialog = () => {
           </DialogClose>
         </div>
         {error && <p className="text-red-500 text-end">{error}</p>}
-        <div className="flex flex-col md:flex-row gap-8 items-center">
+        <div className="flex flex-col md:flex-row gap-8 ">
           <div className="md:w-1/2">
             <CoinImageBox
               image={selectedCoin?.large}

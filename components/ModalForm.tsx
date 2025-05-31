@@ -7,6 +7,15 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { selectedCoin } from "./PortfolioDialog";
 import { addCoin } from "@/lib/portfolioSlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+
+import { Input } from "./ui/input";
 
 type formProps = {
   selectedCoin: selectedCoin | null;
@@ -82,11 +91,25 @@ const ModalForm = ({
     }
   }
   return (
-    <form className="grid gap-4 py-4   md:w-[28.81rem]">
+    <form className="grid gap-4 py-4 md:py-0 items-stretch grid-cols-1  md:w-[28.81rem]">
       <div className="  max-w-full">
         <CoinSelect setSelectedCoin={setSelectedCoin} />
       </div>
       <div className="w-full">
+        <Select>
+          <SelectTrigger className="w-full dark:bg-[#191925]">
+            <SelectValue placeholder="Select Amount" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="$100">100</SelectItem>
+            <SelectItem value="250">250</SelectItem>
+            <SelectItem value="500">500</SelectItem>
+            <SelectItem value="1000">1000</SelectItem>
+            <SelectItem value="5000">5000</SelectItem>
+            <SelectItem value="10000">10000</SelectItem>
+          </SelectContent>
+        </Select>
+
         <select
           className="w-full bg-[#191925] p-4 rounded-sm"
           name=""
@@ -109,15 +132,19 @@ const ModalForm = ({
       <div className="w-full">
         <input
           value={dateInput}
-          className="bg-[#191925]  py-4 pl-4 pr-0 w-full rounded-sm"
+          className="bg-[#191925]  p-4  w-full rounded-sm"
           placeholder="Purchased Date"
           type="date"
           onChange={handleChange}
           id="purchasedDate"
           required
         />
+        <Input
+          className="inline-block dark:bg-[#191925] text-neutral-400"
+          type="date"
+        />
       </div>
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 items-stretch">
         <DialogTrigger
           onClick={clearSelectedCoin}
           className="rounded-lg  bg-[#232336] flex-1 py-3 px-4 order-2"
