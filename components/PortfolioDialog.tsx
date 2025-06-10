@@ -47,15 +47,8 @@ const PortfolioDialog = () => {
           Add Asset
         </Button>
       </DialogTrigger>
-      <DialogTrigger className="sm:hidden">
-        <button className="bg-[#4F4FA0] rounded-full btn p-4 fixed z-10 bottom-24 right-5 sm:hidden">
-          <Image
-            src={"/icons/plus.png"}
-            width={24}
-            height={24}
-            alt="plus icon"
-          />
-        </button>
+      <DialogTrigger className="sm:hidden bg-[#4F4FA0] rounded-full btn p-4 fixed z-10 bottom-24 right-5 ">
+        <Image src={"/icons/plus.png"} width={24} height={24} alt="plus icon" />
       </DialogTrigger>
       <DialogContent className=" sm:max-w-[886px] p-12 [&>button]:hidden ">
         <div className="flex justify-between">
