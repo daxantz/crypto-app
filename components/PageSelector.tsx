@@ -18,7 +18,7 @@ const PageSelector = () => {
       >
         <Link href={"/"}>
           <ToggleGroupItem
-            className="dark:data-[state=on]:bg-[#6161D680] dark:data-[state=off]:bg-[#232336] px-4 py-3 w-1/2"
+            className="dark:data-[state=on]:bg-[#6161D680] dark:data-[state=off]:bg-[#232336] px-4 py-3 w-1/2 dark:data-[state=off]:hover:bg-[#7676d380] "
             value="/"
           >
             Coins
@@ -26,7 +26,7 @@ const PageSelector = () => {
         </Link>
         <Link href={"/convertor"}>
           <ToggleGroupItem
-            className="dark:data-[state=on]:bg-[#6161D680] w-1/2 dark:data-[state=off]:bg-[#232336]"
+            className="dark:data-[state=on]:bg-[#6161D680] w-1/2 dark:data-[state=off]:bg-[#232336] dark:data-[state=off]:hover:bg-[#7676d380]"
             value="/convertor"
           >
             Convertor
