@@ -9,7 +9,7 @@ const customStyles: StylesConfig = {
     backgroundColor: "#191925",
     border: "none",
     width: "100%",
-    padding: "8px",
+    padding: "2px .25rem",
   }),
   input: (provided) => ({
     ...provided,
@@ -18,14 +18,14 @@ const customStyles: StylesConfig = {
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: "white",
+    color: "#a3a3a3",
   }),
 
   menu: (provided) => ({
     ...provided,
     backgroundColor: "#4e4e4e",
     borderRadius: "4px",
-    width: "420px",
+    width: "100%",
   }),
 
   menuList: (provided) => ({
@@ -46,11 +46,11 @@ const customStyles: StylesConfig = {
   }),
   dropdownIndicator: (provided) => ({
     ...provided,
-    color: "white",
+    color: "gray",
     padding: "0 10px",
     transform: "translateY(-50%)",
     position: "absolute",
-    right: "-10px",
+    right: "3px",
     top: "50%",
     width: "35px",
   }),
@@ -58,6 +58,9 @@ const customStyles: StylesConfig = {
     ...provided,
     color: "white", // 🟢 Controls the selected text color
     fontWeight: "500", // Optional: makes it bold
+  }),
+  loadingIndicator: () => ({
+    display: "none",
   }),
 };
 export type option = {
