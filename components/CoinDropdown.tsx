@@ -101,9 +101,13 @@ const CoinSelect = ({ setSelectedCoin }: CoinSelectProps) => {
       styles={customStyles}
       cacheOptions
       loadOptions={debouncedLoadOptions}
-      defaultOptions
       placeholder="Select Coins"
       onChange={handleChange}
+      noOptionsMessage={({ inputValue }) =>
+        inputValue.trim() === ""
+          ? "Start typing to search for coins..."
+          : "No coins found."
+      }
     />
   );
 };
