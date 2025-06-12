@@ -17,7 +17,7 @@ const MarketDataCard = ({ coin }: CardProps) => {
     coin?.market_data?.total_volume[selectedCurrency] /
       coin?.market_data?.market_cap[selectedCurrency];
   return (
-    <div className="py-10 px-2 sm:px-14 flex flex-col sm:gap-8 rounded-xl bg-[#6161d680] text-white   dark:bg-[#1E1932]   sm:h-[26.26rem]">
+    <div className="py-10 px-2 sm:px-14 flex flex-col flex-[2] sm:gap-8 rounded-xl bg-[#6161d680] text-white   dark:bg-[#1E1932]   sm:h-[26.26rem]">
       <div className="upper flex flex-col gap-4">
         <div className="flex justify-between ">
           <p className="flex gap-3">

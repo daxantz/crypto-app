@@ -39,14 +39,12 @@ const CoinDetails = async (props: PageProps) => {
       <div className="flex flex-col md:flex-row h-full gap-2 sm:gap-10  ">
         <div className="flex flex-col  sm:w-[60%] justify-between">
           <div className="flex flex-col sm:flex-row gap-2  sm:gap-8   ">
-            <div className="w-full sm:w-[19.06rem] sm:h-[333px] flex flex-col justify-between ">
-              <div className="h-[75%]">
-                <CoinImageBox
-                  image={coin?.image?.large}
-                  title={coin?.name}
-                  symbol={coin?.symbol}
-                />{" "}
-              </div>
+            <div className="w-full sm:w-[19.06rem] sm:h-[333px] flex flex-col justify-between  flex-1 ">
+              <CoinImageBox
+                image={coin?.image?.large}
+                title={coin?.name}
+                symbol={coin?.symbol}
+              />{" "}
               <div className="hidden sm:block">
                 <CopyLink url={orgLink} />
               </div>
