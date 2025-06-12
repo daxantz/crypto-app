@@ -38,12 +38,13 @@ const CoinCarousel = () => {
   });
 
   useEffect(() => {
-    if (data && data.length > 0 && !selectedCoin) {
+    if (data && data.length > 0) {
       dispatch(setSelectedCoin(data[0]));
       dispatch(setSelectedCoins(data[0]));
     }
-  }, [data, selectedCoin, dispatch]);
+  }, [data, dispatch]);
   if (isLoading) return <CardSkeleton />;
+
   return (
     <div>
       <Carousel className="mt-20">
@@ -61,6 +62,7 @@ const CoinCarousel = () => {
                 data={data}
                 selectedCurrency={selectedCurrency}
                 isLoading={isLoading}
+                selectedCoin={selectedCoin}
               />
             </Suspense>
           ))}
@@ -70,7 +72,8 @@ const CoinCarousel = () => {
       </Carousel>
 
       <ChartContainer days={days} />
-      <IntervalSelector setDays={setDays} days={days} />
+
+      <IntervalSelector setDays={setDays} />
     </div>
   );
 };
@@ -82,6 +85,7 @@ type CoinCardProps = {
   data: searchCoins[];
   selectedCurrency: Currency;
   isLoading: boolean;
+  selectedCoin: searchCoins | null;
 };
 
 export const CoinCard = ({
@@ -115,6 +119,7 @@ export const CoinCard = ({
     }
 
     dispatch(setSelectedCoin(data?.find((coin) => coin.id === coinId)));
+
     params.set("coinId", coinId);
     router.push(`?${params.toString()}`, { scroll: false });
   }
@@ -125,17 +130,21 @@ export const CoinCard = ({
       className={`basis-[30%] flex gap-2 rounded-lg py-2 px-[10px]  dark:bg-[#181825] dark:border-none
         ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
         
-        md:flex md:gap-4 md:py-4 md:px-8 sm:basis-[40%] lg:basis-1/5 md:rounded-md bg-[#FFFFFF] border
-        ${selectedCoin?.id === coin.id ? "bg-[#6161D680]" : ""}
+        md:flex md:gap-4 md:py-4 md:px-8 sm:basis-[40%] xl:basis-1/4 md:rounded-md bg-[#FFFFFF] border
+        ${
+          selectedCoin?.id === coin.id
+            ? "dark:bg-[#6161D680] bg-[#6161D680]"
+            : ""
+        }
         ${
           isComparing && selectedCoins[1]?.id === coin.id
-            ? "bg-[#6161D680]"
+            ? "dark:bg-[#6161D680] bg-[#6161D680]"
             : ""
         }
       `}
       key={coin.id}
     >
-      <Image
+      {/* <Image
         className="hidden md:block"
         src={coin.image}
         width={50}
@@ -150,21 +159,30 @@ export const CoinCard = ({
         height={24}
         alt={`${coin.name} image`}
         quality={100}
-      />
+      /> */}
+      <div className="h-8 w-8 md:w-10 md:self-start self-center ">
+        <Image
+          src={coin.image}
+          alt={`${coin.name} image`}
+          width={100}
+          height={50}
+        />
+      </div>
+
       <div>
         <p>
           <span className="hidden sm:inline">{coin.name}</span>{" "}
           <span className="hidden sm:inline">
             ({coin.symbol.toUpperCase()})
           </span>
-          <span className="sm:hidden">{coin.symbol.toUpperCase()}</span>
+          <span className="sm:hidden ">{coin.symbol.toUpperCase()}</span>
         </p>
-        <span className="hidden sm:inline">
-          {Humanize.formatNumber(coin.total_supply)}{" "}
+        <span className="hidden lg:inline text-sm ">
+          {Humanize.formatNumber(coin.current_price)}{" "}
           {selectedCurrency.toUpperCase()}
         </span>
         <span
-          className={`hidden md:inline ml-2
+          className={`hidden lg:inline ml-2 text-sm
             ${
               coin.price_change_percentage_24h < 0
                 ? "md:text-red-600"
