@@ -15,7 +15,7 @@ const CoinPriceCard = ({ coin }: CardProps) => {
     (state: RootState) => state.currency.currency
   );
   return (
-    <div className="bg-[#6161d680] dark:bg-[#1E1932] py-10 px-14 flex flex-col gap-6 rounded-xl sm:w-[22.18rem] text-white h-[333px]">
+    <div className="bg-[#6161d680] dark:bg-[#1E1932] py-10 px-14 flex flex-col flex-1 gap-6 rounded-xl sm:w-[22.18rem] text-white h-[333px]">
       <p className="font-bold text-4xl">
         $
         {Humanize.formatNumber(
@@ -36,7 +36,7 @@ const CoinPriceCard = ({ coin }: CardProps) => {
         <Layers size={24} />
       </div>
 
-      <div>
+      <div className="sm:hidden lg:block">
         <div className="flex gap-4">
           <Triangle fill="green" color="green" width={16} height={16} />
           <div>
@@ -57,7 +57,7 @@ const CoinPriceCard = ({ coin }: CardProps) => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="sm:hidden lg:block">
         <div className="flex gap-4">
           <Triangle
             fill="red"

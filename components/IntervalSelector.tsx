@@ -2,73 +2,67 @@ import { useSearchParams, useRouter } from "next/navigation";
 
 import React from "react";
 
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
 const IntervalSelector = ({
   setDays,
-  days,
 }: {
   setDays: React.Dispatch<React.SetStateAction<string>>;
-  days: string;
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
 
-  function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    const newday = (e.target as HTMLInputElement).id;
-    setDays(newday);
-    params.set("days", newday);
+  function handleClick(value: string) {
+    setDays(value);
+    params.set("days", value);
     router.push(`?${params.toString()}`, { scroll: false });
   }
   return (
-    <div className="flex gap-2 border bg-[#a7a7d0] dark:border-none dark:bg-[#232336] sm:w-[28rem] rounded-sm mt-4 sm:mt-12 justify-evenly hover:cursor-pointer">
-      <div
-        onClick={handleClick}
+    <ToggleGroup
+      type="single"
+      defaultValue="30"
+      onValueChange={handleClick}
+      className="border bg-[#a7a7d0] dark:border-none dark:bg-[#232336] sm:w-[28rem] rounded-sm mt-4 sm:mt-12 justify-around "
+    >
+      <ToggleGroupItem
+        value="1"
         id="1"
-        className={`py-2 px-5 rounded-md w-14 ${
-          days === "1" ? "btn bg-[#6161D680" : ""
-        }`}
+        aria-label="Toggle bold"
+        aria-description="1"
+        className="dark:data-[state=on]:bg-[#6161D680]"
       >
         1D
-      </div>
-
-      <div
-        onClick={handleClick}
-        id="14"
-        className={`py-2 px-5 rounded-md w-14 ${
-          days === "14" ? "btn bg-[#6161D680] " : ""
-        }`}
-      >
-        14D
-      </div>
-      <div
-        onClick={handleClick}
-        id="30"
-        className={`py-2 px-5 rounded-md w-14 ${
-          days === "30" ? "btn bg-[#6161D680]" : ""
-        }`}
-      >
-        1M
-      </div>
-      <div
-        onClick={handleClick}
-        id="7"
-        className={`py-2 px-5 rounded-md w-14 ${
-          days === "7" ? "btn bg-[#6161D680]" : ""
-        }`}
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        value="7"
+        aria-label="Toggle italic"
+        className="dark:data-[state=on]:bg-[#6161D680]"
       >
         1W
-      </div>
-      <div
-        onClick={handleClick}
-        id="365"
-        className={`py-2 px-5 rounded-md w-14 ${
-          days === "365" ? "btn bg-[#6161D680]" : ""
-        }`}
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        value="14"
+        aria-label="Toggle strikethrough"
+        className="dark:data-[state=on]:bg-[#6161D680]"
+      >
+        14D
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        value="30"
+        aria-label="Toggle strikethrough"
+        className="dark:data-[state=on]:bg-[#6161D680]"
+      >
+        1M
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        value="365"
+        aria-label="Toggle strikethrough"
+        className="dark:data-[state=on]:bg-[#6161D680] "
       >
         1Y
-      </div>
-    </div>
+      </ToggleGroupItem>
+    </ToggleGroup>
   );
 };
-
 export default IntervalSelector;

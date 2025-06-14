@@ -38,7 +38,7 @@ export default function RootLayout({
               </div>
             </div>
 
-            <main className="max-w-[1790px] mx-auto mt-12 ">
+            <main className=" max-w-[80%] mx-auto mt-12 ">
               {" "}
               <div className="hidden sm:block">
                 <Navbar />

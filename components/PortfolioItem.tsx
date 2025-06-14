@@ -22,12 +22,16 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
   const hrChangePercentage = foundCoin?.price_change_percentage_24h;
 
   return (
-    <div className="flex flex-col sm:flex-row rounded-lg border-2 dark:border-none">
-      <div className="dark:bg-[#191932] sm:w-[23.7rem] py-6 px-4 flex flex-col gap-8 rounded-l-lg">
-        <div className="flex gap-2 justify-between sm:justify-start">
+    <div className="flex flex-col xl:flex-row rounded-lg border-2 dark:border-none">
+      <div
+        className="dark:bg-[#191932] xl:w-[23.7rem] py-6 px-4 flex flex-col gap-8 
+  rounded-tl-xl rounded-tr-xl 
+  xl:rounded-tr-none xl:rounded-bl-lg"
+      >
+        <div className="flex gap-2 justify-between ">
           <Image
             className="order-2"
-            width={32}
+            width={50}
             height={32}
             src={coin.image}
             alt="coin image"
@@ -62,9 +66,11 @@ const PortfolioItem = ({ currency, coin, data }: portfolioItemProps) => {
           </p>
         </div>
       </div>
+      {/* right side */}
       <div
-        className="bg-[#7878be] dark:bg-[#2D2D51] max-w-full grid grid-cols-2 
-   sm:flex-1 py-6 px-4 gap-5 sm:rounded-r-xl"
+        className="bg-[#7878be] dark:bg-[#2D2D51] max-w-full grid grid-cols-2 sm:flex-1 py-6 px-4 gap-5 
+  rounded-bl-xl rounded-br-xl 
+  xl:rounded-bl-none xl:rounded-tr-xl xl:rounded-br-xl"
       >
         <div className=" border border-[#191932] rounded-lg px-2 py-3 ">
           <p>${coin.amountPurchased}</p>

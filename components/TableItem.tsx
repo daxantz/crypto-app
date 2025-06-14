@@ -18,6 +18,7 @@ import {
 } from "chart.js";
 import Link from "next/link";
 import { TableRow, TableCell } from "@/components/ui/table";
+import { Progress } from "./ui/progress";
 
 ChartJS.register(
   CategoryScale,
@@ -46,16 +47,17 @@ const TableItem = ({
         backgroundcolor: "green",
         borderWidth: 5,
         borderColor: "#6374C3",
-        fill: true,
+
         pointRadius: 0,
         pointBorderRadius: 50,
         lineTension: 0.4,
+        pointHoverRadius: 0,
       },
     ],
   };
 
   return (
-    <TableRow className=" sm:table-row  sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-4 py-6 dark:hover:bg-[#2A2A3B]/50">
+    <TableRow className=" sm:table-row  sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-4 py-6 dark:hover:bg-[#2A2A3B]/50 text-lg">
       <TableCell className="hidden sm:table-cell font-medium rounded-s-xl">
         {index + 1}
       </TableCell>
@@ -71,11 +73,11 @@ const TableItem = ({
       <TableCell>${Humanize.formatNumber(coin.current_price, 0)}</TableCell>
 
       <TableCell
-        className={
+        className={`${
           coin.price_change_percentage_1h_in_currency < 0
             ? "text-[#FE2264]"
             : "text-[#01F1E3]"
-        }
+        } `}
       >
         {Math.abs(
           Number(
@@ -86,11 +88,11 @@ const TableItem = ({
       </TableCell>
 
       <TableCell
-        className={
+        className={`hidden sm:table-cell ${
           coin.price_change_percentage_24h_in_currency < 0
             ? "text-[#FE2264]"
             : "text-[#01F1E3]"
-        }
+        }`}
       >
         {Math.abs(
           Number(
@@ -115,25 +117,35 @@ const TableItem = ({
         %
       </TableCell>
 
-      <TableCell className="hidden sm:table-cell w-[20rem]">
-        <progress
-          className="h-2 w-full rounded-sm [&::-webkit-progress-value]:bg-blue-400"
+      <TableCell className="hidden lg:table-cell w-[20rem]">
+        {/* <progress
+          className="progress-bar h-4 w-full rounded-full [&::-webkit-progress-value]:bg-blue-400"
           value={coin.market_cap_change_24h}
           max={coin.market_cap}
+        /> */}
+        <Progress
+          className="h-3"
+          value={(coin.market_cap_change_24h / coin.market_cap) * 100}
         />
       </TableCell>
 
-      <TableCell className="hidden sm:table-cell w-[20rem] ">
-        <progress
-          className="h-2 w-full rounded-sm [&::-webkit-progress-value]:bg-blue-400"
+      <TableCell className="hidden lg:table-cell w-[20rem] ">
+        {/* <progress
+          className="progress-bar h-4 w-full rounded-full rounded-s-full [&::-webkit-progress-value]:bg-blue-400"
           value={coin.circulating_supply}
           max={coin.total_supply}
+        >
+          000
+        </progress> */}
+        <Progress
+          className="h-3"
+          value={(coin.circulating_supply / coin.total_supply) * 100}
         />
       </TableCell>
 
-      <TableCell className="hidden sm:table-cell rounded-e-xl  w-32">
+      <TableCell className="hidden md:table-cell rounded-e-xl  w-32">
         <div className="w-[9.37rem] ">
-          <Line data={data} options={options} />
+          <Line className="bg-transparent" data={data} options={options} />
         </div>
       </TableCell>
     </TableRow>

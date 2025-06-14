@@ -7,6 +7,15 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { selectedCoin } from "./PortfolioDialog";
 import { addCoin } from "@/lib/portfolioSlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+
+import { Input } from "./ui/input";
 
 type formProps = {
   selectedCoin: selectedCoin | null;
@@ -30,28 +39,34 @@ const ModalForm = ({
     new Date(selectedCoin?.purchasedDate as Date).getTime() > Date.now();
 
   function handleChange(
-    option: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    option: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | string
   ): void {
-    if (
-      (Number(selectedCoin?.amount) > 0 ||
-        selectedCoin?.purchasedDate instanceof Date) &&
-      selectedCoin
-    ) {
-      setError(null);
-    }
-    if (option.target.id === "purchasedDate") {
-      setDateInput(option.target.value);
+    if (typeof option === "string") {
       setSelectedCoin((selectedCoin: selectedCoin | null) => {
-        return {
-          ...selectedCoin,
-          purchasedDate: new Date(option.target.value),
-        };
+        return { ...selectedCoin, amount: option };
+      });
+    } else {
+      if (
+        (Number(selectedCoin?.amount) > 0 ||
+          selectedCoin?.purchasedDate instanceof Date) &&
+        selectedCoin
+      ) {
+        setError(null);
+      }
+      if (option.target.id === "purchasedDate") {
+        setDateInput(option.target.value);
+        setSelectedCoin((selectedCoin: selectedCoin | null) => {
+          return {
+            ...selectedCoin,
+            purchasedDate: new Date(option.target.value),
+          };
+        });
+      }
+
+      setSelectedCoin((selectedCoin: selectedCoin | null) => {
+        return { ...selectedCoin, [option.target.id]: option.target.value };
       });
     }
-
-    setSelectedCoin((selectedCoin: selectedCoin | null) => {
-      return { ...selectedCoin, [option.target.id]: option.target.value };
-    });
   }
 
   function clearSelectedCoin(): void {
@@ -82,12 +97,26 @@ const ModalForm = ({
     }
   }
   return (
-    <form className="grid gap-4 py-4   md:w-[28.81rem]">
+    <form className="grid gap-4 py-4 md:py-0 items-stretch grid-cols-1  md:w-[28.81rem]">
       <div className="  max-w-full">
         <CoinSelect setSelectedCoin={setSelectedCoin} />
       </div>
       <div className="w-full">
-        <select
+        <Select onValueChange={handleChange}>
+          <SelectTrigger className="w-full dark:bg-[#191925]">
+            <SelectValue placeholder="Select Amount" />
+          </SelectTrigger>
+          <SelectContent id="amount">
+            <SelectItem value="$100">100</SelectItem>
+            <SelectItem value="250">250</SelectItem>
+            <SelectItem value="500">500</SelectItem>
+            <SelectItem value="1000">1000</SelectItem>
+            <SelectItem value="5000">5000</SelectItem>
+            <SelectItem value="10000">10000</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {/* <select
           className="w-full bg-[#191925] p-4 rounded-sm"
           name=""
           id="amount"
@@ -104,20 +133,28 @@ const ModalForm = ({
           <option value="1500">$1500</option>
           <option value="5000">$5000</option>
           <option value="10000">$10000</option>
-        </select>
+        </select> */}
       </div>
       <div className="w-full">
-        <input
+        {/* <input
           value={dateInput}
-          className="bg-[#191925]  py-4 pl-4 pr-0 w-full rounded-sm"
+          className="bg-[#191925]  p-4  w-full rounded-sm"
           placeholder="Purchased Date"
           type="date"
           onChange={handleChange}
           id="purchasedDate"
           required
+        /> */}
+        <Input
+          className="inline-block dark:bg-[#191925] text-neutral-400"
+          type="date"
+          value={dateInput}
+          onChange={handleChange}
+          id="purchasedDate"
+          required
         />
       </div>
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 items-stretch">
         <DialogTrigger
           onClick={clearSelectedCoin}
           className="rounded-lg  bg-[#232336] flex-1 py-3 px-4 order-2"

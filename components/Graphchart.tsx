@@ -30,6 +30,13 @@ ChartJS.register(
 );
 export const options = {
   responsive: true,
+  elements: {
+    point: {
+      radius: 0,
+      hoverRadius: 0,
+      hitRadius: 0,
+    },
+  },
   plugins: {
     legend: {
       position: "top" as const,

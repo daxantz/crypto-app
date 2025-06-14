@@ -29,9 +29,7 @@ const PortfolioContainer = () => {
     return (
       <div className="mt-10 flex flex-col gap-6 justify-center">
         <p className="text-center text-3xl">
-          Click the{" "}
-          <span className="text-[#6161D680]">&ldquo;Add Asset&rdquo; </span>
-          button to begin
+          Click the &ldquo;Add Asset&rdquo; button to begin
         </p>
       </div>
     );
