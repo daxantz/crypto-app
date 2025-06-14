@@ -36,9 +36,9 @@ const CoinDetails = async (props: PageProps) => {
           Portfolio / Your <span>{coin?.name}</span> summary
         </p>
       </div>
-      <div className="flex flex-col md:flex-row h-full gap-2 sm:gap-10  ">
-        <div className="flex flex-col  sm:w-[60%] justify-between">
-          <div className="flex flex-col sm:flex-row gap-2  sm:gap-8   ">
+      <div className="flex flex-col xl:flex-row h-full gap-4 sm:gap-10  ">
+        <div className="flex flex-col  xl:w-[60%] justify-between gap-4 sm:gap-10">
+          <div className="flex flex-col sm:flex-row gap-4  sm:gap-8   ">
             <div className="w-full sm:w-[19.06rem] sm:h-[333px] flex flex-col justify-between  flex-1 ">
               <CoinImageBox
                 image={coin?.image?.large}
@@ -54,7 +54,7 @@ const CoinDetails = async (props: PageProps) => {
           </div>
           <CoinDesciptionBox coin={coin} />
         </div>
-        <div className="flex flex-1 flex-col justify-between h-full gap-2 sm:gap-16  ">
+        <div className="flex flex-1 flex-col justify-between h-full gap-4 sm:gap-10  ">
           <MarketDataCard coin={coin} />
           <div className="flex flex-col gap-2 sm:gap-6 ">
             {coin && (

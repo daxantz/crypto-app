@@ -36,7 +36,7 @@ const CoinPriceCard = ({ coin }: CardProps) => {
         <Layers size={24} />
       </div>
 
-      <div>
+      <div className="sm:hidden lg:block">
         <div className="flex gap-4">
           <Triangle fill="green" color="green" width={16} height={16} />
           <div>
@@ -57,7 +57,7 @@ const CoinPriceCard = ({ coin }: CardProps) => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="sm:hidden lg:block">
         <div className="flex gap-4">
           <Triangle
             fill="red"
