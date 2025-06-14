@@ -16,7 +16,7 @@ const SearchInput = () => {
   if (isLoading) return <Skeleton className="rounded-md w-[262px]" />;
 
   return (
-    <form className="relative" onSubmit={(e) => e.preventDefault()}>
+    <form className="relative flex-[1] " onSubmit={(e) => e.preventDefault()}>
       <div className="flex justify-center items-center relative rounded-md ">
         <Image
           className="object-contain absolute left-3 top-3.5 hidden sm:block"
@@ -27,7 +27,7 @@ const SearchInput = () => {
         />
       </div>
       <input
-        className="bg-[#CCCCFA66] dark:bg-[#191925] px-2 sm:px-12 sm:py-2  h-12 rounded-md "
+        className="bg-[#CCCCFA66] dark:bg-[#191925] px-2 sm:px-12 sm:py-2  h-12 rounded-md w-full "
         type="search"
         placeholder="Search..."
         onChange={(e) => {
