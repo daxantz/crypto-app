@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link as LinkImage } from "lucide-react";
 import { Copy } from "lucide-react";
 import Link from "next/link";
+import { Button } from "./ui/button";
+import { toast } from "sonner";
 const CopyLink = ({ url }: { url: string | undefined }) => {
   const [isCopied, setIsCopied] = useState(false);
   async function copyToClipboard(text: string) {
@@ -25,10 +27,23 @@ const CopyLink = ({ url }: { url: string | undefined }) => {
         <LinkImage width={20} height={20} />
         <span>{url}</span>
       </Link>
-      <button disabled={isCopied} onClick={() => copyToClipboard(url)}>
-        <Copy width={20} height={20} />
-      </button>
-      <p>{isCopied && "Copied!"}</p>
+      <Button
+        className="dark:bg-transparent bg-transparent"
+        disabled={isCopied}
+        onClick={() => {
+          copyToClipboard(url);
+          toast("Copied!", {
+            action: {
+              label: "close",
+              onClick: () => {
+                return;
+              },
+            },
+          });
+        }}
+      >
+        <Copy color="white" width={20} height={20} />
+      </Button>
     </div>
   );
 };

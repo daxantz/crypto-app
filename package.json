@@ -40,6 +40,7 @@
     "react-select": "^5.10.1",
     "react-select-async-paginate": "^0.7.9",
     "react-window": "^1.8.11",
+    "sonner": "^2.0.5",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
