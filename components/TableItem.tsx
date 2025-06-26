@@ -15,6 +15,7 @@ import {
   Tooltip,
   Filler,
   Legend,
+  ScriptableContext,
 } from "chart.js";
 import Link from "next/link";
 import { TableRow, TableCell } from "@/components/ui/table";
@@ -44,29 +45,48 @@ const TableItem = ({
       {
         label: "Volume 24h",
         data: coin.sparkline_in_7d.price,
-        backgroundcolor: "green",
-        borderWidth: 5,
-        borderColor: "#6374C3",
+        backgroundColor: (context: ScriptableContext<"line">) => {
+          const chart = context.chart;
+          const { ctx, chartArea } = chart;
 
+          // Make sure chart area is available
+          if (!chartArea) {
+            return "#7878FA"; // fallback color
+          }
+
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.top,
+            0,
+            chartArea.bottom
+          );
+          gradient.addColorStop(0, "rgba(120, 120, 250, 0.4)");
+          gradient.addColorStop(1, "rgba(120, 120, 250, 0.05)");
+
+          return gradient;
+        },
+        borderWidth: 1.5,
+        borderColor: "#6374C3",
+        fill: true,
         pointRadius: 0,
         pointBorderRadius: 50,
-        lineTension: 0.4,
+        lineTension: 2,
         pointHoverRadius: 0,
       },
     ],
   };
 
   return (
-    <TableRow className=" sm:table-row  sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-4 py-6 dark:hover:bg-[#2A2A3B]/50 text-lg">
+    <TableRow className=" sm:table-row  sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-[20px] py-6 dark:hover:bg-[#2A2A3B]/50 text-lg">
       <TableCell className="hidden sm:table-cell font-medium rounded-s-xl">
         {index + 1}
       </TableCell>
 
-      <TableCell className="w-[100px]">
-        <Link className="flex items-center gap-2" href={coin.id}>
+      <TableCell className=" ">
+        <Link className="flex items-center gap-2  border" href={coin.id}>
           <Image width={32} height={32} src={coin.image} alt={coin.name} />
-          <span className="hidden sm:inline">{coin.name}</span>
-          <span className="ml-1">({coin.symbol.toUpperCase()})</span>
+          <span className="hidden sm:inline ">{coin.name}</span>
+          <span className="ml-1 text-sm">({coin.symbol.toUpperCase()})</span>
         </Link>
       </TableCell>
 

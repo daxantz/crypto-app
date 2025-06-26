@@ -64,3 +64,27 @@ export function getMonthlyAverages(
 
   return avgArray as [string, number][];
 }
+import { ScriptableContext } from "chart.js";
+
+export function createVerticalGradient<TType extends "line" | "bar">(
+  colorTop: string,
+  colorBottom: string
+) {
+  return (context: ScriptableContext<TType>) => {
+    const chart = context.chart;
+    const { ctx, chartArea } = chart;
+
+    if (!chartArea) return colorTop;
+
+    const gradient = ctx.createLinearGradient(
+      0,
+      chartArea.top,
+      0,
+      chartArea.bottom
+    );
+    gradient.addColorStop(0, colorTop);
+    gradient.addColorStop(1, colorBottom);
+
+    return gradient;
+  };
+}
