@@ -77,13 +77,13 @@ const TableItem = ({
   };
 
   return (
-    <TableRow className=" sm:table-row  sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-[20px] py-6 dark:hover:bg-[#2A2A3B]/50 text-lg">
-      <TableCell className="hidden sm:table-cell font-medium rounded-s-xl">
+    <TableRow className=" sm:table-row  sm:gap-0 px-5 justify-between bg-white border dark:border-none dark:bg-[#191925] dark:hover:bg-[#2A2A3B]/50 text-lg">
+      <TableCell className="hidden sm:table-cell font-medium rounded-s-xl pl-5">
         {index + 1}
       </TableCell>
 
-      <TableCell className=" ">
-        <Link className="flex items-center gap-2  border" href={coin.id}>
+      <TableCell className=" w-20 ">
+        <Link className="flex items-center gap-2" href={coin.id}>
           <Image width={32} height={32} src={coin.image} alt={coin.name} />
           <span className="hidden sm:inline ">{coin.name}</span>
           <span className="ml-1 text-sm">({coin.symbol.toUpperCase()})</span>
@@ -137,7 +137,7 @@ const TableItem = ({
         %
       </TableCell>
 
-      <TableCell className="hidden lg:table-cell w-[20rem]">
+      <TableCell className="hidden lg:table-cell w-[15rem]">
         {/* <progress
           className="progress-bar h-4 w-full rounded-full [&::-webkit-progress-value]:bg-blue-400"
           value={coin.market_cap_change_24h}
@@ -149,7 +149,7 @@ const TableItem = ({
         />
       </TableCell>
 
-      <TableCell className="hidden lg:table-cell w-[20rem] ">
+      <TableCell className="hidden lg:table-cell w-[15rem] ">
         {/* <progress
           className="progress-bar h-4 w-full rounded-full rounded-s-full [&::-webkit-progress-value]:bg-blue-400"
           value={coin.circulating_supply}
@@ -163,8 +163,8 @@ const TableItem = ({
         />
       </TableCell>
 
-      <TableCell className="hidden md:table-cell rounded-e-xl  w-32">
-        <div className="w-[9.37rem] ">
+      <TableCell className="hidden md:table-cell rounded-e-xl  w-32 pr-5">
+        <div className="w-[7.37rem] ">
           <Line className="bg-transparent" data={data} options={options} />
         </div>
       </TableCell>

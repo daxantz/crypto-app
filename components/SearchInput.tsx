@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import search from "@/public/icons/search.png";
 
 import Link from "next/link";
 
 import { useDebouncedSearchParams } from "@/lib/hooks/useDebounceSearch";
 import { Skeleton } from "./ui/skeleton";
+import { Search } from "lucide-react";
 
 const SearchInput = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -18,10 +18,8 @@ const SearchInput = () => {
   return (
     <form className="relative flex-[1] " onSubmit={(e) => e.preventDefault()}>
       <div className="flex justify-center items-center relative rounded-md ">
-        <Image
+        <Search
           className="object-contain absolute left-3 top-3.5 hidden sm:block"
-          src={search}
-          alt="search-icon"
           width={20}
           height={20}
         />
