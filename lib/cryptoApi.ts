@@ -6,6 +6,7 @@ import { chartCoin } from "./types/chartCoin";
 
 import { BatchedCoin } from "./types/batchedCoin";
 import { rate } from "./types/rate";
+import { CoinMarketData } from "@/components/CoinTable";
 
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
@@ -51,6 +52,12 @@ export const cryptoApi = createApi({
       query: ({ coin1Id, coin2Id }) =>
         `api/convertorGraph/?c1=${coin1Id}&c2=${coin2Id}`,
     }),
+    getTableCoins: build.query<
+      CoinMarketData[],
+      { curr: string; page: number }
+    >({
+      query: ({ curr, page }) => `api/coinTable/?curr=${curr}&page=${page}`,
+    }),
   }),
   keepUnusedDataFor: 60 * 10,
 });
@@ -66,4 +73,6 @@ export const {
   useGetGraphExhangeRatesQuery,
   useGetCoinsByIdsQuery,
   usePrefetch,
+  useGetTableCoinsQuery,
+  useLazyGetTableCoinsQuery,
 } = cryptoApi;
