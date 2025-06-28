@@ -47,9 +47,9 @@ const CoinCarousel = () => {
 
   return (
     <div>
-      <Carousel className="mt-20">
-        <div className="flex justify-between">
-          <p className="self-center text-xs text-black dark:text-[#E8E8E8]">
+      <Carousel className="my-10 ">
+        <div className="flex justify-between mb-6">
+          <p className="self-center text-xs sm:text-lg text-black dark:text-[#E8E8E8]">
             Select the currency to view statistics
           </p>
           <CompareButton />
@@ -67,13 +67,15 @@ const CoinCarousel = () => {
             </Suspense>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden lg:inline-flex" />
-        <CarouselNext className="hidden lg:inline-flex" />
+        <CarouselPrevious className="hidden lg:inline-flex top-[65%]" />
+        <CarouselNext className="hidden lg:inline-flex top-[65%]" />
       </Carousel>
 
       <ChartContainer days={days} />
 
-      <IntervalSelector setDays={setDays} />
+      <div className="mt-[56px]">
+        <IntervalSelector setDays={setDays} />
+      </div>
     </div>
   );
 };
@@ -127,7 +129,7 @@ export const CoinCard = ({
   return (
     <CarouselItem
       onClick={() => handleClick(coin.id)}
-      className={`basis-[30%] flex gap-2 rounded-lg py-2 px-[10px]  dark:bg-[#181825] dark:border-none
+      className={`basis-[30%] flex gap-2 rounded-lg py-2 px-[10px] items-center  dark:bg-[#181825] dark:border-none
         ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
         
         md:flex md:gap-4 md:py-4 md:px-8 sm:basis-[40%] xl:basis-1/4 md:rounded-md bg-[#FFFFFF] border
@@ -144,23 +146,7 @@ export const CoinCard = ({
       `}
       key={coin.id}
     >
-      {/* <Image
-        className="hidden md:block"
-        src={coin.image}
-        width={50}
-        height={35}
-        alt={`${coin.name} image`}
-        quality={100}
-      />
-      <Image
-        className=" md:hidden"
-        src={coin.image}
-        width={24}
-        height={24}
-        alt={`${coin.name} image`}
-        quality={100}
-      /> */}
-      <div className="h-8 w-8 md:w-10 md:self-start self-center ">
+      <div className="h-8 w-8 md:w-10  self-center ">
         <Image
           src={coin.image}
           alt={`${coin.name} image`}

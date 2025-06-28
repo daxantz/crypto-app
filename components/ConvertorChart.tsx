@@ -1,5 +1,6 @@
 import { coin } from "@/lib/conversionSlice";
 import { useGetGraphExhangeRatesQuery } from "@/lib/cryptoApi";
+import { createVerticalGradient } from "@/lib/utils";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -11,7 +12,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -63,24 +64,9 @@ const ConvertorChart = ({ coin1, coin2 }: convertorChartProps) => {
     coin1Id: coin1.id,
     coin2Id: coin2.id,
   });
-  const [gradient, setGradient] = useState<CanvasGradient | null>(null);
+
   const chartRef = useRef<ChartJS<"line", number[], string> | null>(null);
 
-  useEffect(() => {
-    if (chartRef.current) {
-      const ctx = chartRef.current.ctx;
-
-      const gradient = ctx.createLinearGradient(
-        0,
-        400,
-        0,
-        chartRef.current.height
-      );
-
-      gradient.addColorStop(1, "rgba(116, 116, 242, 0.6)");
-      setGradient(gradient);
-    }
-  }, [chartRef]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const labels = data?.map(([month, price]) => {
     return month;
@@ -95,7 +81,10 @@ const ConvertorChart = ({ coin1, coin2 }: convertorChartProps) => {
       {
         label: "Volume 24h",
         data: setData,
-        backgroundColor: gradient || "#7878FA", // Apply gradient or fallback to a default color
+        backgroundColor: createVerticalGradient<"line">(
+          "rgba(120, 120, 250, 1)",
+          "rgba(120, 120, 250, 0)"
+        ),
         borderWidth: 5,
         borderColor: "#7878FA",
         fill: true,
@@ -120,9 +109,9 @@ const ConvertorChart = ({ coin1, coin2 }: convertorChartProps) => {
           {coin2.name} ({coin2.symbol})
         </span>
       </p>
-      <div className="h-[250px] sm:flex sm:h-[500px]">
+      <div className="h-72  flex justify-center">
         <Line
-          className="flex-1 "
+          className="flex-1"
           ref={chartRef}
           data={chartData}
           options={options}

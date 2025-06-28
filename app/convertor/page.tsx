@@ -14,9 +14,9 @@ const page = async () => {
   const data = await res.json();
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6">
       <PageSelector />
-      <div>
+      <div className="mt-10">
         <h2 className="text-xl font-medium">Online currency convertor</h2>
         <CurrentTime />
         <ConvertorContainer data={data} />

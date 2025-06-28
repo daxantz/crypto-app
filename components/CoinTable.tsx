@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/table";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
+import { useLazyGetTableCoinsQuery } from "@/lib/cryptoApi";
+import { getErrorMessage } from "@/lib/utils";
 
 export type CoinMarketData = {
   id: string;
@@ -59,10 +61,10 @@ const CoinTable = () => {
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>("");
   const [hasMore, setHasMore] = useState(true);
-
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.currency
   );
+  const [trigger] = useLazyGetTableCoinsQuery();
 
   // function fetchData() {
   //   async function fetchCoins() {
@@ -82,36 +84,61 @@ const CoinTable = () => {
 
   //   fetchCoins();
   // }
-
-  async function fetchData(pageNum = 1, curr: string, reset = false) {
-    try {
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${curr}&order=market_cap_desc&per_page=250&page=${pageNum}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
-      );
-      const data = await res.json();
-      setCoins((prev) => (reset ? data : [...prev, ...data]));
-      if (data.length === 0) {
-        setHasMore(false);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
-    }
-  }
-
   useEffect(() => {
     setCoins([]);
     setPage(1);
     setHasMore(true);
-    fetchData(1, selectedCurrency, true);
-  }, [selectedCurrency, page]);
-
-  function loadMore() {
+    trigger({ curr: selectedCurrency, page: 1 }).then((res) => {
+      if (res.data) {
+        setCoins(res.data);
+      }
+    });
+  }, [selectedCurrency, trigger]);
+  const loadMore = async () => {
     const nextPage = page + 1;
-    fetchData(nextPage, selectedCurrency);
-    setPage(nextPage);
-  }
+    const result = await trigger({
+      curr: selectedCurrency,
+      page: nextPage,
+    });
+    if (result.error) setError(getErrorMessage(result.error));
+    if (result.status === "fulfilled") {
+      setCoins((prev) => [...prev, ...result?.data]);
+      setPage(nextPage);
+    } else {
+      setHasMore(false);
+    }
+  };
+
+  // async function fetchData(pageNum = 1, curr: string, reset = false) {
+  //   try {
+  //     const res = await fetch(
+  //       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${curr}&order=market_cap_desc&per_page=250&page=${pageNum}&sparkline=true&price_change_percentage=1h%2C24h%2C7d`
+  //     );
+  //     const data = await res.json();
+  //     setCoins((prev) => (reset ? data : [...prev, ...data]));
+  //     if (data.length === 0) {
+  //       setHasMore(false);
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       setError(error.message);
+  //     }
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   setCoins([]);
+  //   setPage(1);
+  //   setHasMore(true);
+  //   fetchData(1, selectedCurrency, true);
+  // }, [selectedCurrency, page]);
+
+  // function loadMore() {
+  //   const nextPage = page + 1;
+  //   fetchData(nextPage, selectedCurrency);
+  //   setPage(nextPage);
+  // }
+
   return (
     <InfiniteScroll
       className="flex flex-col gap-2 "
@@ -141,8 +168,12 @@ const CoinTable = () => {
         </TableHeader>
 
         <TableBody>
-          {coins.map((coin, index) => (
-            <TableItem key={coin.id} coin={coin} index={index} />
+          {coins?.map((coin, index) => (
+            <TableItem
+              key={`${coin.name}-${index + 1}`}
+              coin={coin}
+              index={index}
+            />
           ))}
         </TableBody>
 

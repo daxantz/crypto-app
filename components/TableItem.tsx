@@ -15,6 +15,7 @@ import {
   Tooltip,
   Filler,
   Legend,
+  ScriptableContext,
 } from "chart.js";
 import Link from "next/link";
 import { TableRow, TableCell } from "@/components/ui/table";
@@ -44,29 +45,48 @@ const TableItem = ({
       {
         label: "Volume 24h",
         data: coin.sparkline_in_7d.price,
-        backgroundcolor: "green",
-        borderWidth: 5,
-        borderColor: "#6374C3",
+        backgroundColor: (context: ScriptableContext<"line">) => {
+          const chart = context.chart;
+          const { ctx, chartArea } = chart;
 
+          // Make sure chart area is available
+          if (!chartArea) {
+            return "#7878FA"; // fallback color
+          }
+
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.top,
+            0,
+            chartArea.bottom
+          );
+          gradient.addColorStop(0, "rgba(120, 120, 250, 0.4)");
+          gradient.addColorStop(1, "rgba(120, 120, 250, 0.05)");
+
+          return gradient;
+        },
+        borderWidth: 1.5,
+        borderColor: "#6374C3",
+        fill: true,
         pointRadius: 0,
         pointBorderRadius: 50,
-        lineTension: 0.4,
+        lineTension: 2,
         pointHoverRadius: 0,
       },
     ],
   };
 
   return (
-    <TableRow className=" sm:table-row  sm:gap-0 justify-between bg-white border dark:border-none dark:bg-[#191925]  px-4 py-6 dark:hover:bg-[#2A2A3B]/50 text-lg">
-      <TableCell className="hidden sm:table-cell font-medium rounded-s-xl">
+    <TableRow className=" sm:table-row  sm:gap-0 px-5 justify-between bg-white border dark:border-none dark:bg-[#191925] dark:hover:bg-[#2A2A3B]/50 text-lg">
+      <TableCell className="hidden sm:table-cell font-medium rounded-s-xl pl-5">
         {index + 1}
       </TableCell>
 
-      <TableCell className="w-[100px]">
+      <TableCell className=" w-20 ">
         <Link className="flex items-center gap-2" href={coin.id}>
           <Image width={32} height={32} src={coin.image} alt={coin.name} />
-          <span className="hidden sm:inline">{coin.name}</span>
-          <span className="ml-1">({coin.symbol.toUpperCase()})</span>
+          <span className="hidden sm:inline ">{coin.name}</span>
+          <span className="ml-1 text-sm">({coin.symbol.toUpperCase()})</span>
         </Link>
       </TableCell>
 
@@ -117,7 +137,7 @@ const TableItem = ({
         %
       </TableCell>
 
-      <TableCell className="hidden lg:table-cell w-[20rem]">
+      <TableCell className="hidden lg:table-cell w-[15rem]">
         {/* <progress
           className="progress-bar h-4 w-full rounded-full [&::-webkit-progress-value]:bg-blue-400"
           value={coin.market_cap_change_24h}
@@ -129,7 +149,7 @@ const TableItem = ({
         />
       </TableCell>
 
-      <TableCell className="hidden lg:table-cell w-[20rem] ">
+      <TableCell className="hidden lg:table-cell w-[15rem] ">
         {/* <progress
           className="progress-bar h-4 w-full rounded-full rounded-s-full [&::-webkit-progress-value]:bg-blue-400"
           value={coin.circulating_supply}
@@ -143,8 +163,8 @@ const TableItem = ({
         />
       </TableCell>
 
-      <TableCell className="hidden md:table-cell rounded-e-xl  w-32">
-        <div className="w-[9.37rem] ">
+      <TableCell className="hidden md:table-cell rounded-e-xl  w-32 pr-5">
+        <div className="w-[7.37rem] ">
           <Line className="bg-transparent" data={data} options={options} />
         </div>
       </TableCell>

@@ -64,3 +64,48 @@ export function getMonthlyAverages(
 
   return avgArray as [string, number][];
 }
+import { ScriptableContext } from "chart.js";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
+
+export function createVerticalGradient<TType extends "line" | "bar">(
+  colorTop: string,
+  colorBottom: string
+) {
+  return (context: ScriptableContext<TType>) => {
+    const chart = context.chart;
+    const { ctx, chartArea } = chart;
+
+    if (!chartArea) return colorTop;
+
+    const gradient = ctx.createLinearGradient(
+      0,
+      chartArea.top,
+      0,
+      chartArea.bottom
+    );
+    gradient.addColorStop(0, colorTop);
+    gradient.addColorStop(1, colorBottom);
+
+    return gradient;
+  };
+}
+
+export function getErrorMessage(
+  error: FetchBaseQueryError | SerializedError | undefined
+): string {
+  if (!error) return "Unknown error";
+
+  if ("status" in error) {
+    // FetchBaseQueryError
+    return typeof error.data === "string"
+      ? error.data
+      : JSON.stringify(error.data);
+  }
+
+  if ("message" in error && typeof error.message === "string") {
+    return error.message;
+  }
+
+  return "Unexpected error";
+}

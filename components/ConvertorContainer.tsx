@@ -36,8 +36,8 @@ const ConvertorContainer = ({ data }: { data: searchCoins[] }) => {
       </div>
     );
   return (
-    <div className="mt-6">
-      <div className="flex flex-col sm:flex-row sm:flex-1 gap-6">
+    <div className="mt-6 ">
+      <div className="flex flex-col sm:flex-row sm:flex-1 gap-6 mb-[72px]">
         <CoinConvertor
           color="#191932"
           sellOrBuy="sell"

@@ -19,9 +19,10 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { options } from "./Graphchart";
-import useGradient from "@/lib/hooks/useGradient";
+
 import { labels } from "@/lib/chartOptions";
 import { useMemo } from "react";
+import { createVerticalGradient } from "@/lib/utils";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -47,8 +48,6 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
   const isComparing = useSelector(
     (state: RootState) => state.coins.isComparing
   );
-
-  const { gradient, lineRef, chartRef } = useGradient();
 
   const derivedValues = useMemo(() => {
     return {
@@ -82,7 +81,11 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
           {
             label: "Main Coin",
             data: derivedValues.volume,
-            backgroundColor: gradient.barMain || "#7878FA",
+            backgroundColor: createVerticalGradient<"bar">(
+              "rgba(120, 120, 250, 1)",
+              "rgba(120, 120, 250, 0)"
+            ),
+
             borderRadius: 10,
             barPercentage: 0.5,
             categoryPercentage: 1,
@@ -91,7 +94,10 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
           {
             label: "Second Coin",
             data: derivedValues.volume2,
-            backgroundColor: gradient.barSecondary || "#D878FA",
+            backgroundColor: createVerticalGradient<"bar">(
+              "rgba(216, 120, 250, 1)",
+              "rgba(216, 120, 250, 0)"
+            ),
             borderRadius: 10,
             barPercentage: 0.5,
             categoryPercentage: 1,
@@ -102,7 +108,10 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
           {
             label: "Main Coin",
             data: derivedValues.volume,
-            backgroundColor: gradient.barMain || "#7878FA",
+            backgroundColor: createVerticalGradient<"bar">(
+              "rgba(120, 120, 250, 1)",
+              "rgba(120, 120, 250, 0)"
+            ),
             borderRadius: 10,
             barPercentage: 0.5,
             categoryPercentage: 1,
@@ -119,7 +128,10 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
             label: "Main Coin Volume",
             data: derivedValues.prices,
             borderColor: "#7878FA",
-            backgroundColor: gradient.lineMain || "#7878FA",
+            backgroundColor: createVerticalGradient<"line">(
+              "rgba(120, 120, 250, 1)",
+              "rgba(120, 120, 250, 0)"
+            ),
             borderWidth: 5,
             fill: true,
             pointRadius: 0,
@@ -130,7 +142,10 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
             label: "Second Coin Volume",
             data: derivedValues.prices2,
             borderColor: "#D878FA",
-            backgroundColor: gradient.lineSecondary || "#D878FA",
+            backgroundColor: createVerticalGradient<"line">(
+              "rgba(216, 120, 250, 1)",
+              "rgba(216, 120, 250, 0)"
+            ),
             borderWidth: 5,
             fill: true,
             pointRadius: 0,
@@ -143,7 +158,10 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
             label: "Main Coin Volume",
             data: derivedValues.prices,
             borderColor: "#7878FA",
-            backgroundColor: gradient.lineMain || "#7878FA",
+            backgroundColor: createVerticalGradient<"line">(
+              "rgba(120, 120, 250, 1)",
+              "rgba(120, 120, 250, 0)"
+            ),
             borderWidth: 5,
             fill: true,
             pointRadius: 0,
@@ -181,9 +199,9 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
         >
           {date}
         </p>
-        <div className="  self-center">
-          <Line ref={lineRef} options={options} data={lineData} />
-        </div>
+
+        <Line className="max-h-48" options={options} data={lineData} />
+
         <div className={`flex gap-6 ${isComparing ? "" : "hidden"}`}>
           <div className="flex gap-6">
             <div className="w-6 h-6 rounded-sm bg-[#7878FA]"></div>
@@ -201,7 +219,7 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
           </div>
         </div>
       </div>
-      <div className="bg-white border dark:border-none dark:bg-[#1E1932] lg:w-[50%] flex flex-col gap-6 p-6 rounded-xl">
+      <div className="bg-white border dark:border-none dark:bg-[#1E1932] lg:w-[50%] flex flex-col gap-6 p-6 rounded-xl justify-between">
         <p
           className={` text-sm sm:text-[20px] text-[#191932] dark:text-[#D1D1D1] ${
             isComparing ? "text-3xl font-bold" : ""
@@ -217,9 +235,9 @@ const Charts = ({ coinData, coinData2 }: ChartsProps) => {
           ${Humanize.compactInteger(derivedValues.latestVolume || 0, 2)}
         </p>
         <p className="text-[#B9B9BA] text-xs sm:text-base">{date}</p>
-        <div className="max-w-[500px] self-center">
-          <Bar ref={chartRef} options={options} data={data} />
-        </div>
+
+        <Bar className="max-h-48 " options={options} data={data} />
+
         <div className={`flex gap-6 ${isComparing ? "" : "hidden"}`}>
           <div className="flex gap-6">
             <div className="w-6 h-6 rounded-sm bg-[#7878FA]"></div>

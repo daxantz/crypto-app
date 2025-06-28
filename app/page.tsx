@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <PageSelector />
       <CoinCarousel />
-      <div className="mt-10">
+      <div className="mt-[72px]">
         <CoinTable />
       </div>
     </div>

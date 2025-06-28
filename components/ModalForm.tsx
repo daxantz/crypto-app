@@ -115,36 +115,8 @@ const ModalForm = ({
             <SelectItem value="10000">10000</SelectItem>
           </SelectContent>
         </Select>
-
-        {/* <select
-          className="w-full bg-[#191925] p-4 rounded-sm"
-          name=""
-          id="amount"
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled selected hidden>
-            Purchased Amount
-          </option>
-          <option value="100">$100</option>
-          <option value="250">$250</option>
-          <option value="500">$500</option>
-          <option value="1000">$1000</option>
-          <option value="1500">$1500</option>
-          <option value="5000">$5000</option>
-          <option value="10000">$10000</option>
-        </select> */}
       </div>
       <div className="w-full">
-        {/* <input
-          value={dateInput}
-          className="bg-[#191925]  p-4  w-full rounded-sm"
-          placeholder="Purchased Date"
-          type="date"
-          onChange={handleChange}
-          id="purchasedDate"
-          required
-        /> */}
         <Input
           className="inline-block dark:bg-[#191925] text-neutral-400"
           type="date"
@@ -157,7 +129,7 @@ const ModalForm = ({
       <div className="flex flex-col sm:flex-row gap-4 items-stretch">
         <DialogTrigger
           onClick={clearSelectedCoin}
-          className="rounded-lg  bg-[#232336] flex-1 py-3 px-4 order-2"
+          className="rounded-lg  bg-[#232336] flex-1 py-1 px-2 order-2"
         >
           <button>Cancel</button>
         </DialogTrigger>
@@ -165,7 +137,7 @@ const ModalForm = ({
         <button
           className={`rounded-lg flex-1  ${
             error != null && "bg-gray-500"
-          } bg-[#6161D680] btn py-3 px-4`}
+          } bg-[#6161D680] btn py-1 px-2`}
           onClick={saveCoin}
           disabled={
             error === "All fields must be filled out" ||
